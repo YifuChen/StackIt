@@ -3,9 +3,9 @@
 var scene, camera, renderer;  // all threejs programs need these
 var light1,light2;  // we have two lights
 var clock;          // time
-var bricks = new Array(200);
+var bricks;
 var stackHeight;
-
+var gameState = {score:0, scene:"start"};
 var palette_summer = {
     yellow: 0xfff489,
     pink: 0xffdcfc,
@@ -28,7 +28,7 @@ function createScene(){
     initLight();
     initRenderer();
     initControls();
-
+    bricks = new Array(200);
     // next we make the floor and walls
     var foundation = new Foundation();
     scene.add(foundation.mesh);
@@ -40,22 +40,29 @@ function createScene(){
     addBrick();
 }
 
-
 function animate() {
-    var deltaTime = clock.getDelta();
-    if (!bricks[stackHeight].isDropped) {
-        if(camera.position.y - bricks[stackHeight].mesh.position.y <= 100) {
-            moveCamera(deltaTime);
-        }
-        moveBrick(bricks[stackHeight], deltaTime);
-    } else {
-        dropBrick(bricks[stackHeight]);
-        addBrick();
-    }
+  switch (gameState.scene) {
+    case 'start':
+      var deltaTime = clock.getDelta();
+      if (!bricks[stackHeight].isDropped) {
+          if(camera.position.y - bricks[stackHeight].mesh.position.y <= 100) {
+              moveCamera(deltaTime);
+          }
+          moveBrick(bricks[stackHeight], deltaTime);
+      } else {
+          dropBrick(bricks[stackHeight]);
+          addBrick();
+      }
+      //scene.simulate();
+      renderer.render( scene, camera );
+      break;
+    case 'end':
+        endGame();
+      break;
+    default:
 
-    //scene.simulate();
-	renderer.render( scene, camera );
-    requestAnimationFrame( animate );
+  }
+  requestAnimationFrame( animate );
 }
 
 
@@ -84,7 +91,9 @@ function initRenderer() {
         antialias: true
     });
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	document.body.appendChild( renderer.domElement );
+  var canvas = document.getElementById("canvas-area");
+	canvas.innerHTML = "";
+  canvas.appendChild(renderer.domElement);
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     window.addEventListener('resize', handleWindowResize, false);
@@ -120,7 +129,8 @@ function initControls(){
     //create a clock for the time-based animation ...
 	clock = new THREE.Clock();
 	clock.start();
-    window.addEventListener('click', handleMouseClick, false);
+  //window.addEventListener('click', handleMouseClick, false);
+  window.addEventListener( 'keydown', keydown);
 }
 
 function handleMouseClick(event) {
@@ -201,6 +211,10 @@ function dropBrick(brick) {
     if (brick.direction == 'x') {
         var newWidth = width - Math.abs(brick.mesh.position.x - posX);
         console.log("newWidth:"+newWidth);
+        if(newWidth < 0){
+            gameState.scene = 'end';
+            return;
+        }
         var deltaX = Math.abs(width - newWidth);
         brick.mesh.scale.x = newWidth/50;
         if (brick.mesh.position.x - posX <= 0) {
@@ -211,6 +225,11 @@ function dropBrick(brick) {
 
     } else {
         var newDepth = depth - Math.abs(brick.mesh.position.z - posZ);
+        console.log("newDepth:"+newDepth);
+        if(newDepth < 0){
+            gameState.scene = 'end';
+            return;
+        }
         var deltaZ = Math.abs(depth - newDepth);
         brick.mesh.scale.z = newDepth/50;
         if (brick.mesh.position.z - posZ <= 0) {
@@ -222,4 +241,28 @@ function dropBrick(brick) {
     brick.fly_speed = 0;
     stackHeight += 1;
 
+}
+
+function endGame(){
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    gameState.scene = "default";
+}
+
+function keydown(event){
+	console.log("Keydown:"+event.key);
+	//console.dir(event);
+	// first we handle the "play again" key in the "youwon" scene
+	if (gameState.scene == 'default' && (event.key=='r'||event.key=='R')) {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+    createScene();
+    gameState.scene = 'start';
+		gameState.score = 0;
+		return;
+	}
+  if (gameState.scene == 'start' && (event.key=='j'||event.key=='J')) {
+		bricks[stackHeight].isDropped = true;
+		return;
+	}
 }

@@ -10,14 +10,34 @@
 		<style>
 			body { margin: 0; overflow: hidden}
 			canvas { width: 100%; height: 100% }
+			.modal {
+		    display: none; /* Hidden by default */
+		    position: fixed; /* Stay in place */
+		    z-index: 1; /* Sit on top */
+		    left: 0;
+		    top: 0;
+		    width: 100%; /* Full width */
+		    height: 100%; /* Full height */
+		    overflow: auto; /* Enable scroll if needed */
+		    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+				color: white;
+				font-size: 60px;
+				padding-top: 300px;
+				text-align: center;
+		}
 		</style>
 	</head>
 	<body>
 		<div id="Stats-output"></div>
 		<!-- Div which will hold the Output -->
 		<div id="WebGL-output"></div>
+		<div id="canvas-area"></div>
+		<div id="myModal" class="modal">
+			<div>Game Over, Please Press 'r' to Restart</div>
+		</div>
 		<script type="text/javascript" src="stackScene.js">
 
 		</script>
+
 	</body>
 </html>
