@@ -151,16 +151,20 @@ function Brick(direction, width, depth) {
 }
 
 function addBrick() {
-    var width = 50 * bricks[stackHeight - 1].mesh.scale.x;
-    var depth = 50 * bricks[stackHeight - 1].mesh.scale.z;
+    var width = 50;
+    var depth = 50;
     var posX = bricks[stackHeight - 1].mesh.position.x;
     var posZ = bricks[stackHeight - 1].mesh.position.z;
 
     if (bricks[stackHeight - 1].direction == 'z') {
         bricks[stackHeight] = new Brick('x', width, depth);
+        bricks[stackHeight].mesh.scale.x = bricks[stackHeight - 1].mesh.scale.x;
+        bricks[stackHeight].mesh.scale.z = bricks[stackHeight - 1].mesh.scale.z;
         bricks[stackHeight].mesh.position.set(-59, 8*(stackHeight) , posZ);
     } else {
         bricks[stackHeight] = new Brick('z', width, depth);
+        bricks[stackHeight].mesh.scale.x = bricks[stackHeight - 1].mesh.scale.x;
+        bricks[stackHeight].mesh.scale.z = bricks[stackHeight - 1].mesh.scale.z;
         bricks[stackHeight].mesh.position.set(posX, 8*(stackHeight) , -59);
     }
     scene.add(bricks[stackHeight].mesh);
@@ -187,11 +191,16 @@ function moveBrick(brick, deltaTime) {
 function dropBrick(brick) {
     var width = 50 * bricks[stackHeight - 1].mesh.scale.x;
     var depth = 50 * bricks[stackHeight - 1].mesh.scale.z;
+
+    console.log("width:"+width);
+    console.log("depth:"+depth);
+
     var posX = bricks[stackHeight - 1].mesh.position.x;
     var posZ = bricks[stackHeight - 1].mesh.position.z;
 
     if (brick.direction == 'x') {
         var newWidth = width - Math.abs(brick.mesh.position.x - posX);
+        console.log("newWidth:"+newWidth);
         var deltaX = Math.abs(width - newWidth);
         brick.mesh.scale.x = newWidth/50;
         if (brick.mesh.position.x - posX <= 0) {
