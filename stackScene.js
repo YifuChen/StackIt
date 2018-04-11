@@ -198,6 +198,20 @@ function moveBrick(brick, deltaTime) {
     }
 }
 
+function DroppedBrick(width, depth, x, y, z) {
+    console.log("dropping brick")
+    console.log(width + " " + depth)
+    var geom = new THREE.BoxGeometry(depth, 8, width);
+	var mat = new THREE.MeshLambertMaterial( {color: THREE.Color.blue} );
+	var mesh = new THREE.Mesh(geom, mat);
+	mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    mesh.position.x = x;
+    mesh.position.y = y;
+    mesh.position.z = z;
+    scene.add(mesh)
+}
+
 function dropBrick(brick) {
     var width = 50 * bricks[stackHeight - 1].mesh.scale.x;
     var depth = 50 * bricks[stackHeight - 1].mesh.scale.z;
@@ -206,6 +220,7 @@ function dropBrick(brick) {
     console.log("depth:"+depth);
 
     var posX = bricks[stackHeight - 1].mesh.position.x;
+    var posY = bricks[stackHeight - 1].mesh.position.y;
     var posZ = bricks[stackHeight - 1].mesh.position.z;
 
     if (brick.direction == 'x') {
@@ -219,8 +234,10 @@ function dropBrick(brick) {
         brick.mesh.scale.x = newWidth/50;
         if (brick.mesh.position.x - posX <= 0) {
             brick.mesh.position.x = posX - deltaX/2;
+            DroppedBrick(depth, width - newWidth, posX - deltaX - newWidth / 2, posY + 8, posZ)
         }else {
             brick.mesh.position.x = posX + deltaX/2;
+            DroppedBrick(depth, width - newWidth, posX + deltaX + newWidth / 2, posY + 8, posZ)
         }
 
     } else {
@@ -234,8 +251,10 @@ function dropBrick(brick) {
         brick.mesh.scale.z = newDepth/50;
         if (brick.mesh.position.z - posZ <= 0) {
             brick.mesh.position.z = posZ - deltaZ/2;
+            DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ - deltaZ - newDepth / 2)
         } else {
             brick.mesh.position.z = posZ + deltaZ/2;
+            DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ + deltaZ + newDepth / 2)
         }
     }
     brick.fly_speed = 0;
