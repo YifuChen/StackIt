@@ -53,7 +53,7 @@ function animate() {
           dropBrick(bricks[stackHeight]);
           addBrick();
       }
-      //scene.simulate();
+      scene.simulate();
       renderer.render( scene, camera );
       break;
     case 'end':
@@ -69,8 +69,8 @@ function animate() {
 /* We don't do much here, but we could do more!
 */
 function initPysijs() {
-    Physijs.scripts.worker = '/lib/physijs_worker.js'
-    Physijs.scripts.ammo = '/lib/ammo.js';
+    Physijs.scripts.worker = './lib/physijs_worker.js'
+    Physijs.scripts.ammo = './lib/ammo.js';
 }
 
 function initScene(){
@@ -140,7 +140,7 @@ function handleMouseClick(event) {
 function Foundation() {
     var geom = new THREE.BoxGeometry(50, 150, 50);
 	var mat = new THREE.MeshLambertMaterial( {color: palette_summer['blue']} );
-	this.mesh = new Physijs.BoxMesh(geom, mat, 0);
+	this.mesh = new THREE.Mesh(geom, mat, 0);
 	this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
     this.mesh.position.set(0, -79, 0);
@@ -202,8 +202,9 @@ function DroppedBrick(width, depth, x, y, z) {
     console.log("dropping brick")
     console.log(width + " " + depth)
     var geom = new THREE.BoxGeometry(depth, 8, width);
-	var mat = new THREE.MeshLambertMaterial( {color: THREE.Color.blue} );
-	var mesh = new THREE.Mesh(geom, mat);
+	var mat = new THREE.MeshLambertMaterial( {color: palette_summer.purple} );
+	var pmaterial = new Physijs.createMaterial(mat,0.9,0.95);
+	var mesh = new Physijs.BoxMesh(geom, pmaterial, 50);
 	mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.position.x = x;
