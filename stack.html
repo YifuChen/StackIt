@@ -2,38 +2,29 @@
 <html>
 	<head>
 		<title> Stack </title>
+		<meta charset="utf-8">
+		<link href="https://fonts.googleapis.com/css?family=Rajdhani:300|Roboto:300" rel="stylesheet">
 		<script type="text/javascript" src="lib/three.js"></script>
 		<script type="text/javascript" src="lib/OBJLoader.js"></script>
 		<script type="text/javascript" src="lib/MTLLoader.js"></script>
 		<script type="text/javascript" src="lib/stats.js"></script>
 		<script type="text/javascript" src="lib/physi.js"></script>
-		<style>
-			body { margin: 0; overflow: hidden}
-			canvas { width: 100%; height: 100% }
-			.modal {
-		    display: none; /* Hidden by default */
-		    position: fixed; /* Stay in place */
-		    z-index: 1; /* Sit on top */
-		    left: 0;
-		    top: 0;
-		    width: 100%; /* Full width */
-		    height: 100%; /* Full height */
-		    overflow: auto; /* Enable scroll if needed */
-		    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-				color: white;
-				font-size: 60px;
-				padding-top: 300px;
-				text-align: center;
-		}
-		</style>
+		<link rel="stylesheet" href="../assets/stack-style.css">
 	</head>
 	<body>
 		<div id="Stats-output"></div>
 		<!-- Div which will hold the Output -->
 		<div id="WebGL-output"></div>
 		<div id="canvas-area"></div>
-		<div id="myModal" class="modal">
-			<div>Game Over, Please Press 'r' to Restart</div>
+		<div id="lose-message">
+			
+			<h1>Game Over</h1>
+			<h2 id="score"></h2>		
+			<ul>
+				<button id="button-menu">menu</button>
+				<button id="button-restart">restart</button>
+			</ul>
+			<p>- or press R to restart - </p>
 		</div>
 		<script type="text/javascript" src="stackScene.js">
 
