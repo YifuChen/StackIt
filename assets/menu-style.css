@@ -66,7 +66,7 @@ button {
 	width: 14rem;
 	margin: 2rem;
 	border: 1px solid #ffffff;
-	border-radius: 10px;
+	border-radius: 20px;
 	transition: transform 0.2s ease-in-out 0s;
 }
 

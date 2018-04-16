@@ -298,7 +298,7 @@ function keydown(event) {
 		return;
 	}
 	
-	if (gameState.scene == 'start' && (event.key == 'j' || event.key == 'J')) {
+	if (gameState.scene == 'start' && event.key == ' ') {
 		bricks[stackHeight].isDropped = true;
 		return;
 	}
