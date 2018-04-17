@@ -78,7 +78,7 @@ function initScene() {
 	scene = new Physijs.Scene();
 	scene.background = new THREE.Color(0x162d47)
     scene.fog = new THREE.Fog(0x162d47, 5, 380);
-	scene.setGravity(new THREE.Vector3(0,  -30, 0))
+	scene.setGravity(new THREE.Vector3(0,  -100, 0))
 }
 
 /*
@@ -156,12 +156,17 @@ function Brick(direction, width, depth) {
 	this.drop_speed = 60;
 	this.isDropped = false;
 	this.direction = direction;
+	
 	var geom = new THREE.BoxGeometry(50, 8, 50);
 	geom.scale(width / 50, 1, depth / 50)
 	var mat = new THREE.MeshLambertMaterial({
 		color: palette_summer['yellow']
 	});
-	this.mesh = new THREE.Mesh(geom, mat);
+	var pmaterial = new Physijs.createMaterial(mat, 0.9, 0.01);
+	
+	//this.mesh = new THREE.Mesh(geom, mat);
+	this.mesh = new Physijs.BoxMesh(geom, pmaterial, 0);
+	
 	this.mesh.castShadow = true;
 	this.mesh.receiveShadow = true;
 }
@@ -173,11 +178,13 @@ function addBrick() {
 	var posZ = bricks[stackHeight - 1].mesh.position.z;
 	if (bricks[stackHeight - 1].direction == 'z') {
 		bricks[stackHeight] = new Brick('x', width, depth);
+	    bricks[stackHeight].mesh.__dirtyPosition = true;
 		bricks[stackHeight].mesh.scale.x = bricks[stackHeight - 1].mesh.scale.x;
 		bricks[stackHeight].mesh.scale.z = bricks[stackHeight - 1].mesh.scale.z;
 		bricks[stackHeight].mesh.position.set(-59, 8 * (stackHeight) , posZ);
 	} else {
 		bricks[stackHeight] = new Brick('z', width, depth);
+		bricks[stackHeight].mesh.__dirtyPosition = true;
 		bricks[stackHeight].mesh.scale.x = bricks[stackHeight - 1].mesh.scale.x;
 		bricks[stackHeight].mesh.scale.z = bricks[stackHeight - 1].mesh.scale.z;
 		bricks[stackHeight].mesh.position.set(posX, 8 * (stackHeight) ,  -59);
@@ -187,6 +194,7 @@ function addBrick() {
 }
 
 function moveBrick(brick, deltaTime) {
+	brick.mesh.__dirtyPosition = true;
 	if (brick.direction == 'x') {
 		if (brick.mesh.position.x >= 60) {
 			brick.fly_speed =  - brick.fly_speed;
@@ -213,17 +221,19 @@ function DroppedBrick(width, depth, x, y, z) {
 	var mat = new THREE.MeshLambertMaterial({
 		color: palette_summer.purple
 	});
-	var pmaterial = new Physijs.createMaterial(mat, 0.9, 0.95);
-	var mesh = new Physijs.BoxMesh(geom, pmaterial, 50);
+	var pmaterial = new Physijs.createMaterial(mat, 0.9, 0.01);
+	var mesh = new Physijs.BoxMesh(geom, pmaterial, 500);
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
 	mesh.position.x = x;
 	mesh.position.y = y;
 	mesh.position.z = z;
-	scene.add(mesh)
+	scene.add(mesh);
+	return mesh;
 }
 
 function dropBrick(brick) {
+	brick.mesh.__dirtyPosition = true;
 	var width = 50 * bricks[stackHeight - 1].mesh.scale.x;
 	var depth = 50 * bricks[stackHeight - 1].mesh.scale.z;
 	console.log("width:" + width);
@@ -240,13 +250,21 @@ function dropBrick(brick) {
 		}
 		
 		var deltaX = Math.abs(width - newWidth);
-		brick.mesh.scale.x = newWidth / 50;
-		if (brick.mesh.position.x - posX <= 0) {
+		
+		if (brick.mesh.position.x - posX <= -1) {
+			brick.mesh.scale.x = newWidth / 50;
 			brick.mesh.position.x = posX - deltaX / 2;
-			DroppedBrick(depth, width - newWidth, posX - deltaX - newWidth / 2, posY + 8, posZ)
-		} else {
+			var mesh = DroppedBrick(depth, width - newWidth, posX - deltaX - newWidth / 2, posY + 8, posZ)
+			mesh.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+			
+		} else if (brick.mesh.position.x - posX >= 1){
+			brick.mesh.scale.x = newWidth / 50;
 			brick.mesh.position.x = posX + deltaX / 2;
-			DroppedBrick(depth, width - newWidth, posX + deltaX + newWidth / 2, posY + 8, posZ)
+			var mesh = DroppedBrick(depth, width - newWidth, posX + deltaX + newWidth / 2, posY + 8, posZ)
+			mesh.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+		} else {
+			brick.mesh.position.x = posX;
+			console.log("Right on spot!");
 		}
 	} else {
 		var newDepth = depth - Math.abs(brick.mesh.position.z - posZ);
@@ -257,13 +275,20 @@ function dropBrick(brick) {
 		}
 		
 		var deltaZ = Math.abs(depth - newDepth);
-		brick.mesh.scale.z = newDepth / 50;
-		if (brick.mesh.position.z - posZ <= 0) {
+		
+		if (brick.mesh.position.z - posZ <= -1) {
+			brick.mesh.scale.z = newDepth / 50;
 			brick.mesh.position.z = posZ - deltaZ / 2;
-			DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ - deltaZ - newDepth / 2)
-		} else {
+			var mesh = DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ - deltaZ - newDepth / 2)
+			mesh.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+		} else if (brick.mesh.position.z - posZ >= 1) {
+			brick.mesh.scale.z = newDepth / 50;
 			brick.mesh.position.z = posZ + deltaZ / 2;
-			DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ + deltaZ + newDepth / 2)
+			var mesh = DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ + deltaZ + newDepth / 2)
+			mesh.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+		} else {
+			brick.mesh.position.z = posZ;
+			console.log("Right on spot!");
 		}
 	}
 	
