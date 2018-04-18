@@ -22,7 +22,7 @@ The player will only need to hit "**SPACE**" to decide the right time or positio
 * [Feng Qiao](https://github.com/icadi): handle camera creation and movement
 * [Kevin Wang](https://github.com/ACW101): brick creation and physijs dropping effect
 
-##TODO
+## TODO
 - [ ] Fix dropping brick animation: gravity, ratation
 - [ ] Add different palette to bricks, use gradient colors
 - [ ] Give error tolerance to landing bricks perfectly on the top of stack
