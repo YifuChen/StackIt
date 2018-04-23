@@ -1,7 +1,7 @@
 'use strict';
 var scene, camera, renderer;
 var light1, light2;  // two lights
-var clock;          // time
+var clock;           // time
 var bricks;
 var stackHeight;
 var gameState = {
@@ -15,7 +15,6 @@ var palette_summer = {
 	blue: 0xedc6ff,
 	purple: 0xc4ddff,
 	red: 0xffb8b8,
-	
 }
 
 createScene();
@@ -23,8 +22,9 @@ animate();  // start the animation loop!
 
 
 function createScene() {
-    // these calls define the following global variables
-    //scene, camera, renderer, light1, light2
+	
+	// define the following global variables
+	// scene, camera, renderer, light1, light2
     initScene();
 	initCamera();
 	initLight();
@@ -48,24 +48,26 @@ function animate() {
 			if (!bricks[stackHeight].isDropped) {
 				if (camera.position.y - bricks[stackHeight].mesh.position.y <= 100) {
 					moveCamera(deltaTime);
-				}
-				
+				}			
 				moveBrick(bricks[stackHeight], deltaTime);
 			} else {
 				dropBrick(bricks[stackHeight]);
-				addBrick();
+				if (gameState.scene != 'end') {
+					addBrick();
+				}
 			}
 			
 			scene.simulate();
 			renderer.render(scene, camera);
 			break;
 		case 'end':
-		    endGame();
+			scene.simulate();
+			renderer.render(scene, camera);
 			break;
 		default:
 	}
 	
-	requestAnimationFrame( animate );
+	requestAnimationFrame(animate);
 }
 
 
@@ -78,14 +80,10 @@ function initScene() {
 	scene = new Physijs.Scene();
 	scene.background = new THREE.Color(0x162d47)
     scene.fog = new THREE.Fog(0x162d47, 5, 380);
-	scene.setGravity(new THREE.Vector3(0,  -30, 0))
+	scene.setGravity(new THREE.Vector3(0,  -100, 0))
 }
 
-/*
-	The renderer needs a size and the actual canvas we draw on
-	needs to be added to the body of the webpage. We also specify
-	that the renderer will be computing soft shadows
-*/
+
 function initRenderer() {
 	renderer = new THREE.WebGLRenderer({
 		alpha: true,
@@ -156,15 +154,37 @@ function Brick(direction, width, depth) {
 	this.drop_speed = 60;
 	this.isDropped = false;
 	this.direction = direction;
+	
 	var geom = new THREE.BoxGeometry(50, 8, 50);
 	geom.scale(width / 50, 1, depth / 50)
 	var mat = new THREE.MeshLambertMaterial({
 		color: palette_summer['yellow']
 	});
-	this.mesh = new THREE.Mesh(geom, mat);
+	var pmaterial = new Physijs.createMaterial(mat, 0.9, 0.01);
+	
+	//this.mesh = new THREE.Mesh(geom, mat);
+	this.mesh = new Physijs.BoxMesh(geom, pmaterial, 0);
+	
 	this.mesh.castShadow = true;
 	this.mesh.receiveShadow = true;
 }
+
+
+function DroppedBrick(width, depth, x, y, z) {
+    var geom = new THREE.BoxGeometry(depth, 8, width);
+	var mat = new THREE.MeshLambertMaterial({
+		color: palette_summer.purple
+	});
+	var pmaterial = new Physijs.createMaterial(mat, 0.9, 0.01);
+	this.mesh = new Physijs.BoxMesh(geom, pmaterial, 500);
+	this.mesh.castShadow = true;
+	this.mesh.receiveShadow = true;
+	this.mesh.position.x = x;
+	this.mesh.position.y = y;
+	this.mesh.position.z = z;
+	this.mesh.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+}
+
 
 function addBrick() {
 	var width = 50;
@@ -173,11 +193,13 @@ function addBrick() {
 	var posZ = bricks[stackHeight - 1].mesh.position.z;
 	if (bricks[stackHeight - 1].direction == 'z') {
 		bricks[stackHeight] = new Brick('x', width, depth);
+	    bricks[stackHeight].mesh.__dirtyPosition = true;
 		bricks[stackHeight].mesh.scale.x = bricks[stackHeight - 1].mesh.scale.x;
 		bricks[stackHeight].mesh.scale.z = bricks[stackHeight - 1].mesh.scale.z;
 		bricks[stackHeight].mesh.position.set(-59, 8 * (stackHeight) , posZ);
 	} else {
 		bricks[stackHeight] = new Brick('z', width, depth);
+		bricks[stackHeight].mesh.__dirtyPosition = true;
 		bricks[stackHeight].mesh.scale.x = bricks[stackHeight - 1].mesh.scale.x;
 		bricks[stackHeight].mesh.scale.z = bricks[stackHeight - 1].mesh.scale.z;
 		bricks[stackHeight].mesh.position.set(posX, 8 * (stackHeight) ,  -59);
@@ -187,6 +209,7 @@ function addBrick() {
 }
 
 function moveBrick(brick, deltaTime) {
+	brick.mesh.__dirtyPosition = true;
 	if (brick.direction == 'x') {
 		if (brick.mesh.position.x >= 60) {
 			brick.fly_speed =  - brick.fly_speed;
@@ -206,73 +229,92 @@ function moveBrick(brick, deltaTime) {
 	}
 }
 
-function DroppedBrick(width, depth, x, y, z) {
-	console.log("dropping brick")
-    console.log(width + " " + depth)
-    var geom = new THREE.BoxGeometry(depth, 8, width);
-	var mat = new THREE.MeshLambertMaterial({
-		color: palette_summer.purple
-	});
-	var pmaterial = new Physijs.createMaterial(mat, 0.9, 0.95);
-	var mesh = new Physijs.BoxMesh(geom, pmaterial, 50);
-	mesh.castShadow = true;
-	mesh.receiveShadow = true;
-	mesh.position.x = x;
-	mesh.position.y = y;
-	mesh.position.z = z;
-	scene.add(mesh)
-}
 
 function dropBrick(brick) {
+	
+	// enable flying brick to stop manually
+	brick.mesh.__dirtyPosition = true;
+	brick.mesh.__dirtyRotation = true;
+	
+	// parameters of the top brick on stack
 	var width = 50 * bricks[stackHeight - 1].mesh.scale.x;
 	var depth = 50 * bricks[stackHeight - 1].mesh.scale.z;
-	console.log("width:" + width);
-	console.log("depth:" + depth);
 	var posX = bricks[stackHeight - 1].mesh.position.x;
 	var posY = bricks[stackHeight - 1].mesh.position.y;
 	var posZ = bricks[stackHeight - 1].mesh.position.z;
+	
+	var droppedBrick;
+	
+	// console.log("width:" + width);
+	// console.log("depth:" + depth);
+	
 	if (brick.direction == 'x') {
 		var newWidth = width - Math.abs(brick.mesh.position.x - posX);
-		console.log("newWidth:" + newWidth);
+		// console.log("newWidth:" + newWidth);
 		if (newWidth < 0) {
-			gameState.scene = 'end';
-			return;
-		}
-		
-		var deltaX = Math.abs(width - newWidth);
-		brick.mesh.scale.x = newWidth / 50;
-		if (brick.mesh.position.x - posX <= 0) {
-			brick.mesh.position.x = posX - deltaX / 2;
-			DroppedBrick(depth, width - newWidth, posX - deltaX - newWidth / 2, posY + 8, posZ)
+			droppedBrick = new DroppedBrick(depth, width, brick.mesh.position.x, brick.mesh.position.y, brick.mesh.position.z);
+			scene.remove(brick.mesh);
+			scene.add(droppedBrick.mesh);
+			endGame();
 		} else {
-			brick.mesh.position.x = posX + deltaX / 2;
-			DroppedBrick(depth, width - newWidth, posX + deltaX + newWidth / 2, posY + 8, posZ)
+			var deltaX = Math.abs(width - newWidth);
+			
+			if (brick.mesh.position.x - posX <= -1) {
+				brick.mesh.scale.x = newWidth / 50;
+				brick.mesh.position.x = posX - deltaX / 2;
+				droppedBrick = new DroppedBrick(depth, width - newWidth, posX - deltaX - newWidth / 2, posY + 8, posZ)			
+				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(0, 0, 20));
+				scene.add(droppedBrick.mesh);
+				
+			} else if (brick.mesh.position.x - posX >= 1){
+				brick.mesh.scale.x = newWidth / 50;
+				brick.mesh.position.x = posX + deltaX / 2;
+				droppedBrick = new DroppedBrick(depth, width - newWidth, posX + deltaX + newWidth / 2, posY + 8, posZ)
+				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(0, 0, -20));
+				scene.add(droppedBrick.mesh);
+			} else {
+				brick.mesh.position.x = posX;
+				console.log("Right on spot!");
+			}
 		}
+			
 	} else {
 		var newDepth = depth - Math.abs(brick.mesh.position.z - posZ);
-		console.log("newDepth:" + newDepth);
+		// console.log("newDepth:" + newDepth);
 		if (newDepth < 0) {
-			gameState.scene = 'end';
-			return;
-		}
-		
-		var deltaZ = Math.abs(depth - newDepth);
-		brick.mesh.scale.z = newDepth / 50;
-		if (brick.mesh.position.z - posZ <= 0) {
-			brick.mesh.position.z = posZ - deltaZ / 2;
-			DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ - deltaZ - newDepth / 2)
+			droppedBrick = new DroppedBrick(depth, width, brick.mesh.position.x, brick.mesh.position.y, brick.mesh.position.z);
+			scene.remove(brick.mesh);
+			scene.add(droppedBrick.mesh);
+			endGame();
 		} else {
-			brick.mesh.position.z = posZ + deltaZ / 2;
-			DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ + deltaZ + newDepth / 2)
-		}
+			var deltaZ = Math.abs(depth - newDepth);
+			
+			if (brick.mesh.position.z - posZ <= -1) {
+				brick.mesh.scale.z = newDepth / 50;
+				brick.mesh.position.z = posZ - deltaZ / 2;
+				droppedBrick = new DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ - deltaZ - newDepth / 2)
+				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(-20, 0, 0));
+				scene.add(droppedBrick.mesh);
+			} else if (brick.mesh.position.z - posZ >= 1) {
+				brick.mesh.scale.z = newDepth / 50;
+				brick.mesh.position.z = posZ + deltaZ / 2;
+				droppedBrick = new DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ + deltaZ + newDepth / 2)
+				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(20, 0, 0));
+				scene.add(droppedBrick.mesh);
+			} else {
+				brick.mesh.position.z = posZ;
+				console.log("Right on spot!");
+			}
+		}	
 	}
 	
-	brick.fly_speed = 0;
+	//brick.fly_speed = 0;
 	stackHeight += 1;
 	gameState.score += 1;
 }
 
 function endGame() {
+	gameState.scene = 'end';
 	var message = document.getElementById("lose-message");
 	var canvas = document.getElementById("canvas-area");
 	var score_display = document.getElementById("score");
@@ -280,18 +322,21 @@ function endGame() {
 	canvas.style.filter = "blur(3px) grayscale(30%)";
 	canvas.style.transition;
 	message.style.display = "block";
-	gameState.scene = "default";
 }
 
+
 function keydown(event) {
-	console.log("Keydown:" + event.key);
-	//console.dir(event);
-	// first we handle the "play again" key in the "youwon" scene
-	if (gameState.scene == 'default' && (event.key == 'r' || event.key == 'R')) {
+	// console.log("Keydown:" + event.key);
+	// console.dir(event);
+	if (gameState.scene == 'end' && (event.key == 'r' || event.key == 'R')) {
 		var message = document.getElementById("lose-message");
 		var canvas = document.getElementById("canvas-area");
 		canvas.style.filter = "";
 		message.style.display = "none";
+		// clear three js scene
+		while (scene.children.length > 0) {
+			scene.remove(scene.children[0]);
+		}
 		createScene();
 		gameState.scene = 'start';
 		gameState.score = 0;
@@ -314,6 +359,10 @@ function handleButtonEvent(id) {
 			var canvas = document.getElementById("canvas-area");
 			canvas.style.filter = "";
 			message.style.display = "none";
+			// clear three js scene
+			while (scene.children.length > 0) {
+				scene.remove(scene.children[0]);
+			}
 			createScene();
 			gameState.scene = 'start';
 			gameState.score = 0;
@@ -323,5 +372,4 @@ function handleButtonEvent(id) {
 			window.location.href = 'menu.html';
 		})	
 	}
-	
 }
