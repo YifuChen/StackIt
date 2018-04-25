@@ -9,8 +9,11 @@ var gameState = {
 	scene: "start"
 };
 
+var combo = 0;
+
 var palette_summer = {
 	yellow: 0xfff489,
+	white: 0xF7F9F9,
 	pink: 0xffdcfc,
 	blue: 0xedc6ff,
 	purple: 0xc4ddff,
@@ -44,6 +47,7 @@ function createScene() {
 function animate() {
 	switch (gameState.scene) {
 		case 'start':
+			
 		    var deltaTime = clock.getDelta();
 			if (!bricks[stackHeight].isDropped) {
 				if (camera.position.y - bricks[stackHeight].mesh.position.y <= 100) {
@@ -149,6 +153,39 @@ function Foundation() {
 	this.mesh.position.set(0,  -79, 0);
 }
 
+function playGameMusic(soundfile){
+		// create an AudioListener and add it to the camera
+		var listener = new THREE.AudioListener();
+		camera.add( listener );
+
+		// create a global audio source
+		var sound = new THREE.Audio( listener );
+
+		// load a sound and set it as the Audio object's buffer
+		var audioLoader = new THREE.AudioLoader();
+		audioLoader.load( '/sounds/'+soundfile, function( buffer ) {
+			sound.setBuffer( buffer );
+			sound.setLoop( false );
+			sound.setVolume( 0.05 );
+			sound.play();
+		});
+}
+
+function cheers() {
+	// var light1 = new THREE.PointLight( 0xF1C40F, 1, 100 );
+	// light1.position.set( bricks[stackHeight].mesh.position.x, 
+	// 					bricks[stackHeight].mesh.position.y+10, 
+	// 					bricks[stackHeight].mesh.position.z);
+	// light1.distence = 0.1;
+	// light1.intensity =1;
+	// scene.add( light1 );
+	var pm = combo % 8;
+	var file = pm + '.mp3';
+	console.log(file);
+	playGameMusic(file);
+	gameState.score += combo;
+}
+
 function Brick(direction, width, depth) {
 	this.fly_speed = 80;
 	this.drop_speed = 60;
@@ -158,7 +195,8 @@ function Brick(direction, width, depth) {
 	var geom = new THREE.BoxGeometry(50, 8, 50);
 	geom.scale(width / 50, 1, depth / 50)
 	var mat = new THREE.MeshLambertMaterial({
-		color: palette_summer['yellow']
+		color: palette_summer['white']
+		//color: (Math.random()*16777215)
 	});
 	var pmaterial = new Physijs.createMaterial(mat, 0.9, 0.01);
 	
@@ -255,6 +293,7 @@ function dropBrick(brick) {
 			droppedBrick = new DroppedBrick(depth, width, brick.mesh.position.x, brick.mesh.position.y, brick.mesh.position.z);
 			scene.remove(brick.mesh);
 			scene.add(droppedBrick.mesh);
+			combo = 0;
 			endGame();
 		} else {
 			var deltaX = Math.abs(width - newWidth);
@@ -264,6 +303,7 @@ function dropBrick(brick) {
 				brick.mesh.position.x = posX - deltaX / 2;
 				droppedBrick = new DroppedBrick(depth, width - newWidth, posX - deltaX - newWidth / 2, posY + 8, posZ)			
 				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(0, 0, 20));
+				combo=0;
 				scene.add(droppedBrick.mesh);
 				
 			} else if (brick.mesh.position.x - posX >= 1){
@@ -271,10 +311,13 @@ function dropBrick(brick) {
 				brick.mesh.position.x = posX + deltaX / 2;
 				droppedBrick = new DroppedBrick(depth, width - newWidth, posX + deltaX + newWidth / 2, posY + 8, posZ)
 				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(0, 0, -20));
+				combo=0;
 				scene.add(droppedBrick.mesh);
 			} else {
 				brick.mesh.position.x = posX;
 				console.log("Right on spot!");
+				combo++;
+				cheers();
 			}
 		}
 			
@@ -285,6 +328,7 @@ function dropBrick(brick) {
 			droppedBrick = new DroppedBrick(depth, width, brick.mesh.position.x, brick.mesh.position.y, brick.mesh.position.z);
 			scene.remove(brick.mesh);
 			scene.add(droppedBrick.mesh);
+			combo = 0;
 			endGame();
 		} else {
 			var deltaZ = Math.abs(depth - newDepth);
@@ -295,15 +339,19 @@ function dropBrick(brick) {
 				droppedBrick = new DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ - deltaZ - newDepth / 2)
 				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(-20, 0, 0));
 				scene.add(droppedBrick.mesh);
+				combo = 0;
 			} else if (brick.mesh.position.z - posZ >= 1) {
 				brick.mesh.scale.z = newDepth / 50;
 				brick.mesh.position.z = posZ + deltaZ / 2;
 				droppedBrick = new DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ + deltaZ + newDepth / 2)
 				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(20, 0, 0));
 				scene.add(droppedBrick.mesh);
+				combo = 0;
 			} else {
 				brick.mesh.position.z = posZ;
 				console.log("Right on spot!");
+				combo++;
+				cheers();
 			}
 		}	
 	}
