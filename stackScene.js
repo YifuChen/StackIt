@@ -6,12 +6,12 @@ var bricks;
 var stackHeight;
 var gameState = {
 	score: 0,
-	scene: "start"
+	scene: "start",
+	combo: 0,
+	maxCombo: 0
 };
 
 var rainBowColors=[0xd358f7,0xfa5858,0xfaac58,0xfafa58,0x58fa58,0x58faf4,0x5882fa]
-var combo = 0;
-
 var palette_summer = {
 	yellow: 0xfff489,
 	white: 0xF7F9F9,
@@ -175,12 +175,12 @@ function playGameMusic(soundfile){
 function cheers() {
 	//console.log(bricks[stackHeight].mesh.material.__proto__.color);
 	console.log(rainBowColors);
-	bricks[stackHeight].mesh.material.__proto__.color.setHex(rainBowColors[combo%7]);
-	var pm = combo % 8;
+	bricks[stackHeight].mesh.material.__proto__.color.setHex(rainBowColors[gameState.combo%7]);
+	var pm = gameState.combo % 8;
 	var file = pm + '.mp3';
-	console.log('combo: '+combo);
+	console.log('combo: '+gameState.combo);
 	playGameMusic(file);
-	gameState.score += combo;
+	gameState.score += gameState.combo;
 }
 
 function Brick(direction, width, depth) {
@@ -290,7 +290,8 @@ function dropBrick(brick) {
 			droppedBrick = new DroppedBrick(depth, width, brick.mesh.position.x, brick.mesh.position.y, brick.mesh.position.z);
 			scene.remove(brick.mesh);
 			scene.add(droppedBrick.mesh);
-			combo = 0;
+			gameState.combo = 0;
+			
 			endGame();
 		} else {
 			var deltaX = Math.abs(width - newWidth);
@@ -300,20 +301,24 @@ function dropBrick(brick) {
 				brick.mesh.position.x = posX - deltaX / 2;
 				droppedBrick = new DroppedBrick(depth, width - newWidth, posX - deltaX - newWidth / 2, posY + 8, posZ)			
 				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(0, 0, 20));
-				combo=0;
+				gameState.maxCombo = Math.max(gameState.maxCombo, gameState.combo);
+				gameState.combo=0;
 				scene.add(droppedBrick.mesh);
+				playGameMusic('drop.mp3');
 				
 			} else if (brick.mesh.position.x - posX >= 1){
 				brick.mesh.scale.x = newWidth / 50;
 				brick.mesh.position.x = posX + deltaX / 2;
 				droppedBrick = new DroppedBrick(depth, width - newWidth, posX + deltaX + newWidth / 2, posY + 8, posZ)
 				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(0, 0, -20));
-				combo=0;
+				gameState.maxCombo = Math.max(gameState.maxCombo, gameState.combo);
+				gameState.combo=0;
 				scene.add(droppedBrick.mesh);
+				playGameMusic('drop.mp3');
 			} else {
 				brick.mesh.position.x = posX;
 				console.log("Right on spot!");
-				combo++;
+				gameState.combo++;
 				cheers();
 			}
 		}
@@ -325,7 +330,8 @@ function dropBrick(brick) {
 			droppedBrick = new DroppedBrick(depth, width, brick.mesh.position.x, brick.mesh.position.y, brick.mesh.position.z);
 			scene.remove(brick.mesh);
 			scene.add(droppedBrick.mesh);
-			combo = 0;
+			gameState.combo = 0;
+			
 			endGame();
 		} else {
 			var deltaZ = Math.abs(depth - newDepth);
@@ -336,18 +342,22 @@ function dropBrick(brick) {
 				droppedBrick = new DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ - deltaZ - newDepth / 2)
 				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(-20, 0, 0));
 				scene.add(droppedBrick.mesh);
-				combo = 0;
+				playGameMusic('drop.mp3');
+				gameState.maxCombo = Math.max(gameState.maxCombo, gameState.combo);
+				gameState.combo = 0;
 			} else if (brick.mesh.position.z - posZ >= 1) {
 				brick.mesh.scale.z = newDepth / 50;
 				brick.mesh.position.z = posZ + deltaZ / 2;
 				droppedBrick = new DroppedBrick(depth - newDepth, width, posX , posY + 8, posZ + deltaZ + newDepth / 2)
 				droppedBrick.mesh.setAngularVelocity(new THREE.Vector3(20, 0, 0));
 				scene.add(droppedBrick.mesh);
-				combo = 0;
+				playGameMusic('drop.mp3');
+				gameState.maxCombo = Math.max(gameState.maxCombo, gameState.combo);
+				gameState.combo = 0;
 			} else {
 				brick.mesh.position.z = posZ;
 				console.log("Right on spot!");
-				combo++;
+				gameState.combo++;
 				cheers();
 			}
 		}	
@@ -363,7 +373,9 @@ function endGame() {
 	var message = document.getElementById("lose-message");
 	var canvas = document.getElementById("canvas-area");
 	var score_display = document.getElementById("score");
+	var maxCombo_display = document.getElementById("maxCombo");
 	score_display.innerHTML="[Your Score]: " + gameState.score;
+	maxCombo_display.innerHTML="[Max Combo]: " + gameState.maxCombo;
 	canvas.style.filter = "blur(3px) grayscale(30%)";
 	canvas.style.transition;
 	message.style.display = "block";
@@ -386,6 +398,8 @@ function keydown(event) {
 		createScene();
 		gameState.scene = 'start';
 		gameState.score = 0;
+		gameState.combo = 0;
+		gameState.maxCombo = 0;
 		playGameMusic('restart.mp3');
 		return;
 	}
@@ -414,6 +428,8 @@ function handleButtonEvent(id) {
 			createScene();
 			gameState.scene = 'start';
 			gameState.score = 0;
+			gameState.combo = 0;
+			gameState.maxCombo = 0;
 		})
 	} else if(id == 'button-menu') {
 		button.addEventListener('click', function(event) {
