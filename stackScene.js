@@ -367,6 +367,7 @@ function endGame() {
 	canvas.style.filter = "blur(3px) grayscale(30%)";
 	canvas.style.transition;
 	message.style.display = "block";
+	playGameMusic('gameover.mp3');
 }
 
 
@@ -385,6 +386,7 @@ function keydown(event) {
 		createScene();
 		gameState.scene = 'start';
 		gameState.score = 0;
+		playGameMusic('restart.mp3');
 		return;
 	}
 	
@@ -408,6 +410,7 @@ function handleButtonEvent(id) {
 			while (scene.children.length > 0) {
 				scene.remove(scene.children[0]);
 			}
+			playGameMusic('restart.mp3');
 			createScene();
 			gameState.scene = 'start';
 			gameState.score = 0;
