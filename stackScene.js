@@ -9,6 +9,7 @@ var gameState = {
 	scene: "start"
 };
 
+var rainBowColors=[0xd358f7,0xfa5858,0xfaac58,0xfafa58,0x58fa58,0x58faf4,0x5882fa]
 var combo = 0;
 
 var palette_summer = {
@@ -172,16 +173,12 @@ function playGameMusic(soundfile){
 }
 
 function cheers() {
-	// var light1 = new THREE.PointLight( 0xF1C40F, 1, 100 );
-	// light1.position.set( bricks[stackHeight].mesh.position.x, 
-	// 					bricks[stackHeight].mesh.position.y+10, 
-	// 					bricks[stackHeight].mesh.position.z);
-	// light1.distence = 0.1;
-	// light1.intensity =1;
-	// scene.add( light1 );
+	//console.log(bricks[stackHeight].mesh.material.__proto__.color);
+	console.log(rainBowColors);
+	bricks[stackHeight].mesh.material.__proto__.color.setHex(rainBowColors[combo%7]);
 	var pm = combo % 8;
 	var file = pm + '.mp3';
-	console.log(file);
+	console.log('combo: '+combo);
 	playGameMusic(file);
 	gameState.score += combo;
 }
@@ -421,3 +418,4 @@ function handleButtonEvent(id) {
 		})	
 	}
 }
+
