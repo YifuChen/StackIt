@@ -174,11 +174,11 @@ function playGameMusic(soundfile){
 
 function cheers() {
 	//console.log(bricks[stackHeight].mesh.material.__proto__.color);
-	console.log(rainBowColors);
+	//console.log(rainBowColors);
 	bricks[stackHeight].mesh.material.__proto__.color.setHex(rainBowColors[gameState.combo%7]);
 	var pm = gameState.combo % 8;
 	var file = pm + '.mp3';
-	console.log('combo: '+gameState.combo);
+	//console.log('combo: '+gameState.combo);
 	playGameMusic(file);
 	gameState.score += gameState.combo;
 }
