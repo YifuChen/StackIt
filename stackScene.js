@@ -374,8 +374,8 @@ function endGame() {
 	var canvas = document.getElementById("canvas-area");
 	var score_display = document.getElementById("score");
 	var maxCombo_display = document.getElementById("maxCombo");
-	score_display.innerHTML="[Your Score]: " + gameState.score;
-	maxCombo_display.innerHTML="[Max Combo]: " + gameState.maxCombo;
+	score_display.innerHTML=gameState.score;
+	maxCombo_display.innerHTML=gameState.maxCombo;
 	canvas.style.filter = "blur(3px) grayscale(30%)";
 	canvas.style.transition;
 	message.style.display = "block";
