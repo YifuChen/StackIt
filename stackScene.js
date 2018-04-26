@@ -444,7 +444,7 @@ function handleButtonEvent(id) {
 		})
 	} else if(id == 'button-menu') {
 		button.addEventListener('click', function(event) {
-			window.location.href = 'menu.html';
+			window.location.href = 'index.html';
 		})	
 	}
 }
