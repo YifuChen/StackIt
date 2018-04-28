@@ -1,6 +1,6 @@
 # Stack.io
 A WebGL game built on THREE.JS
-
+[LIVE GAME LINK](https://acw101.github.io/StackIt)
 ![menu](/image/menu.png)
 
 ## Background
@@ -23,8 +23,8 @@ The player will only need to hit "**SPACE**" to decide the right time or positio
 * [Kevin Wang](https://github.com/ACW101): brick creation and physijs dropping effect
 
 ## TODO
-- [ ] Fix dropping brick animation: gravity, ratation
-- [ ] Add different palette to bricks, use gradient colors
-- [ ] Give error tolerance to landing bricks perfectly on the top of stack
-- [ ] Background decoration
+- [x] Fix dropping brick animation: gravity, ratation
+- [x] Add different palette to bricks, use gradient colors
+- [x] Give error tolerance to landing bricks perfectly on the top of stack
+- [x] Background decoration
 - [ ] UI: tutorial, leaderboard, back button, social media sharing buttons, more animations
