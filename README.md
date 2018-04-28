@@ -1,5 +1,6 @@
 # Stack.io
-A WebGL game built on THREE.JS
+A WebGL game built on THREE.JS . 
+
 [LIVE GAME LINK](https://acw101.github.io/StackIt)
 ![menu](/image/menu.png)
 
