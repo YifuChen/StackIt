@@ -4,6 +4,7 @@ var light1, light2;  // two lights
 var clock;           // time
 var bricks;
 var stackHeight;
+var warm = document.getElementById("warm")
 var gameState = {
 	score: 0,
 	scene: "start",
@@ -345,6 +346,7 @@ function dropBrick(brick) {
 				playGameMusic('drop.mp3');
 				gameState.maxCombo = Math.max(gameState.maxCombo, gameState.combo);
 				gameState.combo = 0;
+                warm.classList.remove("yellow", "red");
 			} else if (brick.mesh.position.z - posZ >= 1) {
 				brick.mesh.scale.z = newDepth / 50;
 				brick.mesh.position.z = posZ + deltaZ / 2;
@@ -354,10 +356,19 @@ function dropBrick(brick) {
 				playGameMusic('drop.mp3');
 				gameState.maxCombo = Math.max(gameState.maxCombo, gameState.combo);
 				gameState.combo = 0;
+                warm.classList.remove("yellow", "red");
 			} else {
 				brick.mesh.position.z = posZ;
 				console.log("Right on spot!");
 				gameState.combo++;
+                if (gameState.combo == 1) {
+                    warm.classList.add("yellow");
+                }
+                if (gameState.combo == 3) {
+                    warm.classList.remove("yellow");
+                    warm.classList.add("red");
+                }
+
 				cheers();
 			}
 		}	
@@ -433,7 +444,7 @@ function handleButtonEvent(id) {
 		})
 	} else if(id == 'button-menu') {
 		button.addEventListener('click', function(event) {
-			window.location.href = 'menu.html';
+			window.location.href = 'index.html';
 		})	
 	}
 }
