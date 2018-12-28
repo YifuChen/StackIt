@@ -1,4 +1,7 @@
-'use strict';
+import * as THREE from 'three';
+import './css/stack-style.css'
+import * as Physijs from './lib/physi.js'
+
 var scene, camera, renderer;
 var light1, light2;  // two lights
 var clock;           // time
@@ -58,7 +61,7 @@ function animate() {
 				moveBrick(bricks[stackHeight], deltaTime);
 			} else {
 				dropBrick(bricks[stackHeight]);
-				if (gameState.scene != 'end') {
+				if (gameState.scene !== 'end') {
 					addBrick();
 				}
 			}
@@ -74,12 +77,6 @@ function animate() {
 	}
 	
 	requestAnimationFrame(animate);
-}
-
-
-function initPysijs() {
-	Physijs.scripts.worker = './lib/physijs_worker.js'
-    Physijs.scripts.ammo = './lib/ammo.js';
 }
 
 function initScene() {
@@ -227,7 +224,7 @@ function addBrick() {
 	var depth = 50;
 	var posX = bricks[stackHeight - 1].mesh.position.x;
 	var posZ = bricks[stackHeight - 1].mesh.position.z;
-	if (bricks[stackHeight - 1].direction == 'z') {
+	if (bricks[stackHeight - 1].direction === 'z') {
 		bricks[stackHeight] = new Brick('x', width, depth);
 	    bricks[stackHeight].mesh.__dirtyPosition = true;
 		bricks[stackHeight].mesh.scale.x = bricks[stackHeight - 1].mesh.scale.x;
@@ -246,7 +243,7 @@ function addBrick() {
 
 function moveBrick(brick, deltaTime) {
 	brick.mesh.__dirtyPosition = true;
-	if (brick.direction == 'x') {
+	if (brick.direction === 'x') {
 		if (brick.mesh.position.x >= 60) {
 			brick.fly_speed =  - brick.fly_speed;
 		} else if (brick.mesh.position.x <= -60) {
@@ -284,7 +281,7 @@ function dropBrick(brick) {
 	// console.log("width:" + width);
 	// console.log("depth:" + depth);
 	
-	if (brick.direction == 'x') {
+	if (brick.direction === 'x') {
 		var newWidth = width - Math.abs(brick.mesh.position.x - posX);
 		// console.log("newWidth:" + newWidth);
 		if (newWidth < 0) {
@@ -361,10 +358,10 @@ function dropBrick(brick) {
 				brick.mesh.position.z = posZ;
 				console.log("Right on spot!");
 				gameState.combo++;
-                if (gameState.combo == 1) {
+                if (gameState.combo === 1) {
                     warm.classList.add("yellow");
                 }
-                if (gameState.combo == 3) {
+                if (gameState.combo === 3) {
                     warm.classList.remove("yellow");
                     warm.classList.add("red");
                 }
@@ -388,7 +385,7 @@ function endGame() {
 	score_display.innerHTML=gameState.score;
 	maxCombo_display.innerHTML=gameState.maxCombo;
 	canvas.style.filter = "blur(3px) grayscale(30%)";
-	canvas.style.transition;
+	//canvas.style.transition;
 	message.style.display = "block";
 	playGameMusic('gameover.mp3');
 }
@@ -397,7 +394,7 @@ function endGame() {
 function keydown(event) {
 	// console.log("Keydown:" + event.key);
 	// console.dir(event);
-	if (gameState.scene == 'end' && (event.key == 'r' || event.key == 'R')) {
+	if (gameState.scene === 'end' && (event.key === 'r' || event.key === 'R')) {
 		var message = document.getElementById("lose-message");
 		var canvas = document.getElementById("canvas-area");
 		canvas.style.filter = "";
@@ -415,7 +412,7 @@ function keydown(event) {
 		return;
 	}
 	
-	if (gameState.scene == 'start' && event.key == ' ') {
+	if (gameState.scene === 'start' && event.key === ' ') {
 		bricks[stackHeight].isDropped = true;
 		return;
 	}
@@ -425,7 +422,7 @@ function keydown(event) {
 function handleButtonEvent(id) {
 	
 	var button = document.getElementById(id);
-	if (id == 'button-restart') {
+	if (id === 'button-restart') {
 		button.addEventListener('click', function(event) {
 			var message = document.getElementById("lose-message");
 			var canvas = document.getElementById("canvas-area");
@@ -442,7 +439,7 @@ function handleButtonEvent(id) {
 			gameState.combo = 0;
 			gameState.maxCombo = 0;
 		})
-	} else if(id == 'button-menu') {
+	} else if(id === 'button-menu') {
 		button.addEventListener('click', function(event) {
 			window.location.href = 'index.html';
 		})	
