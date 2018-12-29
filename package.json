@@ -1,14 +1,18 @@
 {
   "name": "stackit_react",
   "version": "1.0.0",
-  "description": "test env",
+  "description": "A WebGL game built on THREE.js",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YifuChen/StackIt.git"
+  },
   "author": "Yifu Chen",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
