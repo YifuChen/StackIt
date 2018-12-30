@@ -1,8 +1,12 @@
 
 class ThreeSubject {
   constructor(threeObj, onUpdate) {
-    this.subject = threeObj; // a mesh, camera, light...
+    this.content = threeObj; // a mesh, camera, light...
     this.update = onUpdate;
+  }
+
+  set update(newUpdate) {
+    this.update = newUpdate;
   }
 }
 
