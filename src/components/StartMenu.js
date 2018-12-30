@@ -1,28 +1,23 @@
 import React, { Component } from 'react'
 import Button from './Button'
-import LoginSection from './LoginSection'
 import '../css/startmenu.css'
 
 class StartMenu extends Component {
   render() {
     return (
       <div className='start-menu'>
-        <header className='info'>
-          <h1>Stack.io</h1>
-          <h2>- A WebGL game built on THREE.js - </h2>	
-        </header>
-        <ul className='menu-options'>
-          <Button name="start" />
-          <Button name="instruction" />
+        <ul className='menu-info'>
+          <li key="title" id="title">Stack.io</li>
+          <li key="description" id="description">- A WebGL game built on THREE.js -</li>	
         </ul>
-        <LoginSection title='Login'> 
-          <li>Google</li>
-          <li>Facebook</li>
-        </LoginSection>
+        <ul className='menu-options'>
+          <li> <Button name="start" /> </li>
+          <li> <Button name="instruction" /> </li>
+          <li> <Button name="login" /> </li>
+        </ul>
         <footer>
           <p>© Copyright 2018 by Seapunk. All rights reserved.</p>
         </footer>
-
       </div>
     );
   }

@@ -10,39 +10,42 @@
 	background-color: black
 }
 
-.info {
+.menu-info {
+	font-family: 'Rajdhani', sans-serif;
 	z-index: 2;
 	position: absolute;
 	width: 100%;
-	height: 20%;
-	left: 50%;
-	margin-left: -50%;
+	height: 10%;
 	top: 20%;
+	list-style: none;
 }
 
-.info h1 {
-	font: 12rem 'Rajdhani', sans-serif;
-	text-align: center;	
-}
-
-.info h2 {
-	font-family: 'Rajdhani', sans-serif;
-	font-size: 2.1rem;
+.menu-info #title {
+	font-size: 12rem;
 	text-align: center;
+}
+
+.menu-info #description {
+	font-size: 2.1rem;
 	letter-spacing: 1px;
+	text-align: center;
 }
 
 .menu-options {
-	list-style-type: none;
+	list-style: none;
 	position: absolute;
-	text-align:center;
 	top: 60%;
 	height: 20%;
+	text-align: center;
 }
 
+.menu-options li {
+	display: inline-block;
+	margin: 1rem;
+}
 
 footer {
-	font-family: 'Roboto',sans-serif;
+	font-family: 'Roboto', 'sans-serif';
 	position: absolute;
 	text-align: center;
 	top: 95%;

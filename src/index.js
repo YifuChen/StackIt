@@ -1,20 +1,20 @@
 // import * as THREE from 'three'
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import StartMenu from './components/StartMenu'
 // import './css/menu-style.css'
 
-class App extends Component {
-	render() {
-		return (
-			<React.Fragment>
-				<StartMenu/>
-			</React.Fragment>
-		);
-	}
-}
+// class App extends Component {
+// 	render() {
+// 		return (
+// 			<React.Fragment>
+// 				<StartMenu/>
+// 			</React.Fragment>
+// 		);
+// 	}
+// }
 
-ReactDOM.render(<App />, document.getElementById('start-menu'));
+ReactDOM.render(<StartMenu />, document.getElementById('start-menu'));
 
 
 // var scene = initScene();
