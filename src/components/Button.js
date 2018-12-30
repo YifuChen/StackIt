@@ -4,16 +4,18 @@ import '../css/button.css';
 
 class Button extends Component {
   render() {
-    return <button> {this.props.name.toString()} </button>;
+    return <button onClick={this.props.onClick}> {this.props.name.toString()} </button>;
   }
 }
 
 Button.defaultProps = {
-  name: 'button'
+  name: 'button',
+  onClick: () => {}
 }
 
 Button.propTypes = {
-  name: PropTypes.string
+  name: PropTypes.string,
+  onClick: PropTypes.func
 }
 
 export default Button;

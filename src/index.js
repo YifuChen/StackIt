@@ -1,20 +1,52 @@
 // import * as THREE from 'three'
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types'
 import StartMenu from './components/StartMenu'
-// import './css/menu-style.css'
+import './css/index.css'
 
-// class App extends Component {
-// 	render() {
-// 		return (
-// 			<React.Fragment>
-// 				<StartMenu/>
-// 			</React.Fragment>
-// 		);
-// 	}
-// }
+class App extends Component {
 
-ReactDOM.render(<StartMenu />, document.getElementById('start-menu'));
+  constructor(props) {
+    super(props);
+    this.state = {
+      appId: this.props.appId,
+      isFBLoggedIn: false,
+      username: "",
+      email: "",
+      userId: "",
+    }
+  }
+
+  handleFBUserLogin(response) {
+    console.log(response);
+    this.setState({
+      isFBLoggedIn: true,
+      username: response.name,
+      email: response.email,
+      userId: response.id,
+    })
+  }
+
+	render() {
+    const isFBLoggedIn = this.state.isFBLoggedIn;
+    const username = this.state.username;
+		return (
+			<React.Fragment>
+        <StartMenu appId={this.props.appId}
+                  onLoggedIn={response => this.handleFBUserLogin(response)}
+                  isLoggedIn={isFBLoggedIn}
+                  username={username}/>
+			</React.Fragment>
+		);
+	}
+}
+
+App.propTypes = {
+  appId: PropTypes.string
+}
+
+ReactDOM.render(<App appId="304325543525495"/>, document.getElementById('app-mount'));
 
 
 // var scene = initScene();
