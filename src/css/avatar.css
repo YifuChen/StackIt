@@ -1,0 +1,23 @@
+.avatar {
+  display: block;
+  background-color: rgba(255, 255, 255, 0);
+  /* border: 1px solid white;
+  border-radius: 20px; */
+  padding: 2.1rem 0 2.1rem 0;
+  width: 40%;
+  margin: 0 auto;
+}
+
+.avatar-photo {
+  border-radius: 30px;
+  height: 60px;
+  width: 60px;
+  margin-bottom: 1rem;
+}
+
+.avatar p {
+  font-family: 'Rajdhani', sans-serif;
+  color: white;
+  font-size: 2.1rem;
+  background-color: rgba(255, 255, 255, 0);
+}

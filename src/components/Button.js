@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import '../css/button.css';
 
 class Button extends Component {
+  handleClick(e) {
+    e.preventDefault();
+    this.props.onClick();
+  }
   render() {
-    return <button onClick={this.props.onClick}> {this.props.name.toString()} </button>;
+    return <button onClick={e => this.handleClick(e)}> {this.props.name.toString()} </button>;
   }
 }
 

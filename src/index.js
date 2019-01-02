@@ -1,52 +1,19 @@
 // import * as THREE from 'three'
-import React, {Component} from 'react';
+import React from 'react'
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types'
-import StartMenu from './components/StartMenu'
-import './css/index.css'
+import App from './components/App';
 
-class App extends Component {
+const firebase_config = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
+};
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      appId: this.props.appId,
-      isFBLoggedIn: false,
-      username: "",
-      email: "",
-      userId: "",
-    }
-  }
-
-  handleFBUserLogin(response) {
-    console.log(response);
-    this.setState({
-      isFBLoggedIn: true,
-      username: response.name,
-      email: response.email,
-      userId: response.id,
-    })
-  }
-
-	render() {
-    const isFBLoggedIn = this.state.isFBLoggedIn;
-    const username = this.state.username;
-		return (
-			<React.Fragment>
-        <StartMenu appId={this.props.appId}
-                  onLoggedIn={response => this.handleFBUserLogin(response)}
-                  isLoggedIn={isFBLoggedIn}
-                  username={username}/>
-			</React.Fragment>
-		);
-	}
-}
-
-App.propTypes = {
-  appId: PropTypes.string
-}
-
-ReactDOM.render(<App appId="304325543525495"/>, document.getElementById('app-mount'));
+console.table(firebase_config);
+ReactDOM.render(<App firebaseConfig={firebase_config}/>, document.getElementById('app-mount'));
 
 
 // var scene = initScene();
