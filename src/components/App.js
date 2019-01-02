@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import StartMenu from './StartMenu';
 import '../css/app.css';
 import Avatar from './Avatar';
+import NavBar from './NavBar';
 
 class App extends Component {
 
@@ -55,6 +56,7 @@ class App extends Component {
 		return (
 			<React.Fragment>
         <div className="bg"></div>
+        <NavBar />
         <ul className='info'>
           <li key="title" id="title">Stack.io</li>
           <li key="description" id="description">{

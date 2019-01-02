@@ -1,0 +1,66 @@
+/* nav-bar wrapper */
+.nav-bar {
+  position: absolute;
+  z-index: 1;
+  height: 5vh;
+  width: 100%;
+  /* border-bottom: 1px dashed white; */
+
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+}
+
+/* nav-bar toggle */
+.nav-bar-toggle {
+  display: flex;
+  align-items: center;
+  height: inherit;
+  margin-left: 2.1rem;
+  transition-property: all;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+	transition-delay: 0s;
+}
+
+.nav-bar-toggle:hover {
+  transform: scale(1.2);
+}
+
+.nav-bar-toggle > p {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 3rem;
+  transition-property: all;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+	transition-delay: 0s;
+}
+
+.nav-bar-toggle > p:hover {
+  color: orange
+}
+
+/* nav-bar options */
+.nav-bar-options {
+  list-style: none;
+  height: inherit;
+  margin-left: 2.1rem;
+  display: inline-flex;
+  align-items: center
+}
+
+.nav-bar-options > li {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.1rem;
+  margin-right: 2.1rem;
+  vertical-align: middle;
+  transition: all 0.2s ease-in-out 0s;
+}
+
+.nav-bar-options > li:hover {
+  transform: scale(1.05);
+  text-decoration: underline;
+}

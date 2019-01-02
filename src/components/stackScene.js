@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import './css/stack-style.css'
-import * as Physijs from './lib/physi.js'
+import * as Physijs from '../lib/physi.js'
 
 var scene, camera, renderer;
 var light1, light2;  // two lights
