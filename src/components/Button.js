@@ -7,6 +7,7 @@ class Button extends Component {
     e.preventDefault();
     this.props.onClick();
   }
+
   render() {
     return <button onClick={e => this.handleClick(e)}> {this.props.name.toString()} </button>;
   }
@@ -14,12 +15,12 @@ class Button extends Component {
 
 Button.defaultProps = {
   name: 'button',
-  onClick: () => {}
-}
+  onClick: () => {},
+};
 
 Button.propTypes = {
   name: PropTypes.string,
-  onClick: PropTypes.func
-}
+  onClick: PropTypes.func,
+};
 
 export default Button;

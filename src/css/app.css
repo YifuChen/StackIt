@@ -11,13 +11,17 @@
 
 .app-bg {
 	position: absolute;
-	height: 100%;
-	width: 100%;
 	z-index: 0;
-	background-image: url("../assets/img/test.jpg");
-	background-size: 100% 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+
+.app-bg > img {
+	height: 100vh;
+	width: 100vw;
+	object-fit: cover;
 	filter: blur(5px) brightness(50%);
-	/* background: burlywood; */
 }
 
 /* info wrapper */
@@ -36,7 +40,7 @@
 }
 
 .app-info > ul {
-	height: fit-content;
+	height: min-content;
 	list-style: none;
 	display: inline-flex;
 	flex-direction: column;

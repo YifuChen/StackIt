@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
-import {FirebaseGoogleLogin, FirebaseFacebookLogin} from './FirebaseService';
+import { FirebaseGoogleLogin, FirebaseFacebookLogin } from './FirebaseService';
 import '../css/startmenu.css';
 import AliasForm from './AliasForm';
 
 class StartMenu extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       inLoginSection: false,
       inTutorSection: false,
       inAliasSection: false,
-    }
+    };
     this.handleLoginButtonClick = this.handleLoginButtonClick.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.handleTutorButtonClick = this.handleTutorButtonClick.bind(this);
@@ -25,14 +24,14 @@ class StartMenu extends Component {
   handleLoginButtonClick() {
     this.setState({
       inLoginSection: true,
-    })
+    });
   }
 
   handleLogoutButtonClick() {
     this.props.onLogout();
     this.setState({
       inAliasSection: false,
-    })
+    });
   }
 
   handleBackButtonClick() {
@@ -40,13 +39,13 @@ class StartMenu extends Component {
       inLoginSection: false,
       inTutorSection: false,
       inAliasSection: false,
-    })
+    });
   }
 
   handleTutorButtonClick() {
     this.setState({
       inTutorSection: true,
-    })
+    });
   }
 
   handleUserLoggedIn(userInfo) {
@@ -55,7 +54,7 @@ class StartMenu extends Component {
     this.setState({
       inLoginSection: !this.props.isLoggedIn,
       inAliasSection: !hasAlias,
-    })
+    });
   }
 
   handleAliasFormSubmit(alias) {
@@ -80,31 +79,32 @@ class StartMenu extends Component {
           <li> <FirebaseFacebookLogin onLogin={this.handleUserLoggedIn}/> </li>
         </ul>
       );
-    } else if (this.state.inTutorSection) {
+    }
+    if (this.state.inTutorSection) {
       return (
-        <Instruction title="🎲 RULES"> 
+        <Instruction title="🎲 RULES">
             <Button name="👈" onClick={this.handleBackButtonClick}/>
         </Instruction>
       );
-    } else if (this.state.inAliasSection) {
+    }
+    if (this.state.inAliasSection) {
       return (
           <AliasForm placeholder={this.props.aliasFormPh}
                       onSubmit={this.handleAliasFormSubmit}
                       onLogout={this.handleLogoutButtonClick}/>
       );
-    } else {
-      return (
-        <ul className='menu-options'>
-          <li> <Button name="start" /> </li>
-          <li> <Button name="tutorial" onClick={this.handleTutorButtonClick}/> </li>
-          {this.props.isLoggedIn ? (
-            <li> <Button name="logout" onClick={this.handleLogoutButtonClick}/> </li>
-          ) : (
-            <li> <Button name="login" onClick={this.handleLoginButtonClick}/> </li>
-          )}
-        </ul>
-      );
     }
+    return (
+      <ul className='menu-options'>
+        <li> <Button name="start" /> </li>
+        <li> <Button name="tutorial" onClick={this.handleTutorButtonClick}/> </li>
+        {this.props.isLoggedIn ? (
+          <li> <Button name="logout" onClick={this.handleLogoutButtonClick}/> </li>
+        ) : (
+          <li> <Button name="login" onClick={this.handleLoginButtonClick}/> </li>
+        )}
+      </ul>
+    );
   }
 
   render() {
@@ -124,7 +124,7 @@ function Instruction(props) {
           <h2> {props.title} </h2>
           <p> Stack up blocks as high as possible!</p>
           <p> </p>
-          <p> 
+          <p>
             You will only need to hit <b>SPACE</b> or <b>CLICK</b> or <b>TAP</b> to lay a new block on stack!
           </p>
         </div>
@@ -136,8 +136,8 @@ function Instruction(props) {
 
 Instruction.propTypes = {
   title: PropTypes.string,
-  children: PropTypes.object
-}
+  children: PropTypes.object,
+};
 
 StartMenu.propTypes = {
   isLoggedIn: PropTypes.bool,
@@ -146,6 +146,6 @@ StartMenu.propTypes = {
   onAliasFormSubmit: PropTypes.func,
   onLogin: PropTypes.func,
   onLogout: PropTypes.func,
-}
+};
 
 export default StartMenu;

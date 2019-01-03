@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 import '../css/navbar.css';
 
 class NavBar extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       showOptions: false,
+      toggleIcon: '>',
     };
     this.handleToggleClick = this.handleToggleClick.bind(this);
   }
@@ -16,6 +16,7 @@ class NavBar extends Component {
   handleToggleClick() {
     this.setState({
       showOptions: !this.state.showOptions,
+      toggleIcon: this.state.showOptions ? '>' : '<',
     });
   }
 
@@ -23,7 +24,7 @@ class NavBar extends Component {
     return (
       <div className='nav-bar'>
         <div className="nav-bar-toggle" onClick={this.handleToggleClick}>
-          <p>&gt;</p>
+          <p>{this.state.toggleIcon}</p>
         </div>
         {this.state.showOptions && (
           <ul className="nav-bar-options">

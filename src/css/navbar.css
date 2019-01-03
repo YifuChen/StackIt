@@ -3,30 +3,23 @@
   position: relative;
   z-index: 1;
   height: 5vh;
-  width: 100%;
+  width: 100vw;
   border-bottom: 1px dashed white;
   display: inline-flex;
   flex-direction: row;
-  flex-wrap: wrap;
   justify-content: flex-start;
   align-content: flex-end;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* nav-bar toggle */
 .nav-bar-toggle {
-  display: flex;
-  align-items: center;
   height: inherit;
   margin-left: 2.1rem;
-  transition-property: all;
-	transition-duration: 0.2s;
-	transition-timing-function: ease-in-out;
-	transition-delay: 0s;
-}
-
-.nav-bar-toggle:hover {
-  transform: scale(1.2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
 }
 
 .nav-bar-toggle > p {
@@ -39,7 +32,8 @@
 }
 
 .nav-bar-toggle > p:hover {
-  color: orange
+  color: orange;
+  transform: scale(1.2);
 }
 
 /* nav-bar options */
@@ -48,14 +42,16 @@
   height: inherit;
   margin-left: 2.1rem;
   display: inline-flex;
-  align-items: center
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: center;
 }
 
 .nav-bar-options > li {
   font-family: 'Rajdhani', sans-serif;
   font-size: 2.1rem;
   margin-right: 2.1rem;
-  vertical-align: middle;
   transition: all 0.2s ease-in-out 0s;
 }
 

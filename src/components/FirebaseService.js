@@ -20,6 +20,7 @@ class FirebaseGoogleLogin extends Component {
                 username: user.displayName,
                 email: user.email,
                 photoURL: user.photoURL,
+                uid: user.uid,
               }
               this.props.onLogin(userInfo);
             })

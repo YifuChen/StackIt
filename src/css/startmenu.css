@@ -43,8 +43,8 @@
 
 .instruction #instruction-info {
 	border: 1px solid white;
+	padding: 1rem;
 	border-radius: 20px;
-	padding: 2.1rem;
 	margin-bottom: 2.1rem;
 }
 

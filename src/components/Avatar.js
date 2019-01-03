@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import '../css/avatar.css'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import '../css/avatar.css';
 
 class Avatar extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Avatar extends Component {
 
 Avatar.propTypes = {
   src: PropTypes.string,
-  name: PropTypes.string
-}
+  name: PropTypes.string,
+};
 
 export default Avatar;
