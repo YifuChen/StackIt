@@ -6,10 +6,7 @@
   justify-content: flex-start;
   align-content: center;
   align-items: center;
-	position: absolute;
-	top: 50vh;
   width: 100vw;
-  height: fit-content;
 }
 
 .alias-form-input {

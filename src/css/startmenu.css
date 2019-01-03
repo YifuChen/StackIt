@@ -9,26 +9,36 @@
 	color: white;
 }
 
+/* start menu wrapper */
+.start-menu {
+	position: relative;
+	width: 100vw;
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	margin-top: 5vh;
+	border: 1px white dashed;
+}
+
 .menu-options {
+	width: 100vw;
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
 	list-style: none;
-	position: absolute;
-	top: 60%;
-	height: 20%;
-	text-align: center;
 }
 
 .menu-options li {
-	display: inline-block;
 	margin: 1rem;
 }
 
 .instruction {
-	display: block;
 	list-style: none;
-	position: absolute;
-	margin: 0 auto;
-	top: 50%;
-	width: 40%;
+	width: 40vw;
 }
 
 .instruction #instruction-info {

@@ -1,16 +1,15 @@
 /* nav-bar wrapper */
 .nav-bar {
-  position: absolute;
+  position: relative;
   z-index: 1;
   height: 5vh;
   width: 100%;
-  /* border-bottom: 1px dashed white; */
-
+  border-bottom: 1px dashed white;
   display: inline-flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-content: center;
+  align-content: flex-end;
   align-items: center;
 }
 

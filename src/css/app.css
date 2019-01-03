@@ -9,7 +9,7 @@
 	color: white;
 }
 
-.bg {
+.app-bg {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -20,34 +20,49 @@
 	/* background: burlywood; */
 }
 
-.info {
-	font-family: 'Rajdhani', sans-serif;
+/* info wrapper */
+.app-info {
 	z-index: 2;
-	position: absolute;
-	width: 100%;
-	height: 10%;
-	top: 20%;
-	list-style: none;
-}
-
-.info li {
-	text-align: center;
 	position: relative;
+	width: 100vw;
+	height: 30vh;
+	margin-top: 10vh;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: center;
+	border: 1px white dashed;
 }
 
-.info #title {
+.app-info > ul {
+	height: fit-content;
+	list-style: none;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: center;
+}
+
+.app-info li {
+	font-family: 'Rajdhani', sans-serif;
+}
+
+.app-info #title {
 	font-size: 12rem;
 }
 
-.info #description {
+.app-info #description {
 	font-size: 2.1rem;
 	letter-spacing: 1px;
 }
 
-footer {
-	font-family: 'Roboto', 'sans-serif';
+.app-footer {
 	position: absolute;
+	top: 97vh;
+	font-family: 'Roboto', 'sans-serif';
 	text-align: center;
-	top: 95%;
 	font-style: italic;
+	border: 1px white dashed;
 }

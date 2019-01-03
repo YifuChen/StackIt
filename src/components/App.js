@@ -74,18 +74,22 @@ class App extends Component {
 	render() {
 		return (
 			<React.Fragment>
-        <div className="bg"></div>
+        <div className="app-bg"></div>
+
         <NavBar />
-        <ul className='info'>
-          <li key="title" id="title">Stack.io</li>
-          <li key="description" id="description">{
-            (this.state.isLoggedIn && this.state.hasAlias) ? (
-              <Avatar name={this.state.alias} src={this.state.photoURL}/>
-            ) : (
-              "- A WebGL game built on THREE.js -"
-            )
-          }</li>	
-        </ul>
+
+        <div className="app-info">
+          <ul>
+            <li key="title" id="title">Stack.io</li>
+            <li key="description" id="description">{
+              (this.state.isLoggedIn && this.state.hasAlias) ? (
+                <Avatar name={this.state.alias} src={this.state.photoURL}/>
+              ) : (
+                "- A WebGL game built on THREE.js -"
+              )
+            }</li>	
+          </ul>
+        </div>
 
         <StartMenu onLogin={userInfo => this.handleUserLogin(userInfo)}
                     onLogout={() => this.handleUserLogout()}
@@ -94,7 +98,7 @@ class App extends Component {
                     aliasFormPh={this.state.username}
                     onAliasFormSubmit={alias => this.handleAliasFormSubmit(alias)}/>
 
-        <footer>
+        <footer className="app-footer">
           <p>© Copyright 2018 by Seapunk. All rights reserved.</p>
         </footer>
 			</React.Fragment>

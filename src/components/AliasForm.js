@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import '../css/accountform.css';
+import '../css/aliasform.css';
 import Button from './Button';
 
 class AliasForm extends Component {

@@ -10,7 +10,7 @@ class Avatar extends Component {
   render() {
     return (
       <div className="avatar">
-        <img className="avatar-photo"src={this.props.src}/>
+        <img className="avatar-photo" src={this.props.src}/>
         <p className="avatar-info">- Welcome, {this.props.name} -</p>
       </div>
     );
