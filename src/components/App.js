@@ -12,10 +12,13 @@ class App extends Component {
     super(props);
     this.state = {
       isLoggedIn: false,
+      hasAlias: false,
+      aliasFormPh: "",
       username: "",
       email: "",
       userId: "",
       photoURL: "",
+      alias: "",
     }
   }
 
@@ -39,7 +42,22 @@ class App extends Component {
       isLoggedIn: true,
       username: userInfo.username,
       email: userInfo.email,
-    })
+      hasAlias: false,
+    });
+
+    // if (!this.state.hasAlias) {
+    //   this.handleCreateAlias();
+    //   this.setState({
+    //     hasAlias: true,
+    //   });
+    // }
+  }
+
+  handleAliasFormSubmit(alias) {
+    this.setState({
+      hasAlias: true,
+      alias: alias,
+    });
   }
 
   handleUserLogout() {
@@ -49,6 +67,7 @@ class App extends Component {
       username: "",
       email: "",
       userId: "",
+      photoURL: "",
     });
   }
 
@@ -60,17 +79,20 @@ class App extends Component {
         <ul className='info'>
           <li key="title" id="title">Stack.io</li>
           <li key="description" id="description">{
-            this.state.isLoggedIn ? (
-              <Avatar name={this.state.username} src={this.state.photoURL}/>
+            (this.state.isLoggedIn && this.state.hasAlias) ? (
+              <Avatar name={this.state.alias} src={this.state.photoURL}/>
             ) : (
               "- A WebGL game built on THREE.js -"
             )
           }</li>	
         </ul>
 
-        <StartMenu onLoggedIn={userInfo => this.handleUserLogin(userInfo)}
-                    onLoggedOut={() => this.handleUserLogout()}
-                    isLoggedIn={this.state.isLoggedIn}/>
+        <StartMenu onLogin={userInfo => this.handleUserLogin(userInfo)}
+                    onLogout={() => this.handleUserLogout()}
+                    isLoggedIn={this.state.isLoggedIn}
+                    hasAlias={this.state.hasAlias}
+                    aliasFormPh={this.state.username}
+                    onAliasFormSubmit={alias => this.handleAliasFormSubmit(alias)}/>
 
         <footer>
           <p>© Copyright 2018 by Seapunk. All rights reserved.</p>

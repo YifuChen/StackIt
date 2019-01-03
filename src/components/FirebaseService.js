@@ -21,7 +21,7 @@ class FirebaseGoogleLogin extends Component {
                 email: user.email,
                 photoURL: user.photoURL,
               }
-              this.props.onLoggedIn(userInfo);
+              this.props.onLogin(userInfo);
             })
             .catch(error => {
               let errorCode = error.code;
@@ -53,7 +53,7 @@ class FirebaseFacebookLogin extends Component {
                 email: user.email,
               }
               console.table(userInfo);
-              this.props.onLoggedIn(userInfo);
+              this.props.onLogin(userInfo);
             })
             .catch(error => {
               let errorCode = error.code;
@@ -67,12 +67,12 @@ class FirebaseFacebookLogin extends Component {
 }
 
 FirebaseFacebookLogin.propTypes = {
-  onLoggedIn: PropTypes.func,
+  onLogin: PropTypes.func,
   isLoggedIn: PropTypes.bool
 }
 
 FirebaseGoogleLogin.propTypes = {
-  onLoggedIn: PropTypes.func,
+  onLogin: PropTypes.func,
   isLoggedIn: PropTypes.bool
 }
 

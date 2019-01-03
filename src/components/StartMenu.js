@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Button from './Button'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Button from './Button';
 import {FirebaseGoogleLogin, FirebaseFacebookLogin} from './FirebaseService';
-import '../css/startmenu.css'
+import '../css/startmenu.css';
+import AliasForm from './AliasForm';
 
 class StartMenu extends Component {
 
@@ -11,10 +12,14 @@ class StartMenu extends Component {
     this.state = {
       inLoginSection: false,
       inTutorSection: false,
+      inAliasSection: false,
     }
     this.handleLoginButtonClick = this.handleLoginButtonClick.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.handleTutorButtonClick = this.handleTutorButtonClick.bind(this);
+    this.handleUserLoggedIn = this.handleUserLoggedIn.bind(this);
+    this.handleAliasFormSubmit = this.handleAliasFormSubmit.bind(this);
+    this.handleLogoutButtonClick = this.handleLogoutButtonClick.bind(this);
   }
 
   handleLoginButtonClick() {
@@ -23,10 +28,18 @@ class StartMenu extends Component {
     })
   }
 
+  handleLogoutButtonClick() {
+    this.props.onLogout();
+    this.setState({
+      inAliasSection: false,
+    })
+  }
+
   handleBackButtonClick() {
     this.setState({
       inLoginSection: false,
       inTutorSection: false,
+      inAliasSection: false,
     })
   }
 
@@ -36,38 +49,68 @@ class StartMenu extends Component {
     })
   }
 
+  handleUserLoggedIn(userInfo) {
+    this.props.onLogin(userInfo);
+    const hasAlias = this.props.hasAlias;
+    this.setState({
+      inLoginSection: !this.props.isLoggedIn,
+      inAliasSection: !hasAlias,
+    })
+  }
+
+  handleAliasFormSubmit(alias) {
+    this.props.onAliasFormSubmit(alias);
+    this.checkAliasSubmit();
+  }
+
+  checkAliasSubmit() {
+    const hasAlias = this.props.hasAlias;
+    console.log(hasAlias);
+    this.setState((state, props) => ({
+      inAliasSection: !props.hasAlias,
+    }));
+  }
+
+  resolveMenuSectionView() {
+    if (this.state.inLoginSection) {
+      return (
+        <ul className='menu-options'>
+          <li> <Button name="👈" onClick={this.handleBackButtonClick}/> </li>
+          <li> <FirebaseGoogleLogin onLogin={this.handleUserLoggedIn}/> </li>
+          <li> <FirebaseFacebookLogin onLogin={this.handleUserLoggedIn}/> </li>
+        </ul>
+      );
+    } else if (this.state.inTutorSection) {
+      return (
+        <Instruction title="🎲 RULES"> 
+            <Button name="👈" onClick={this.handleBackButtonClick}/>
+        </Instruction>
+      );
+    } else if (this.state.inAliasSection) {
+      return (
+          <AliasForm placeholder={this.props.aliasFormPh}
+                      onSubmit={this.handleAliasFormSubmit}
+                      onLogout={this.handleLogoutButtonClick}/>
+      );
+    } else {
+      return (
+        <ul className='menu-options'>
+          <li> <Button name="start" /> </li>
+          <li> <Button name="tutorial" onClick={this.handleTutorButtonClick}/> </li>
+          {this.props.isLoggedIn ? (
+            <li> <Button name="logout" onClick={this.handleLogoutButtonClick}/> </li>
+          ) : (
+            <li> <Button name="login" onClick={this.handleLoginButtonClick}/> </li>
+          )}
+        </ul>
+      );
+    }
+  }
+
   render() {
     return (
       <div className='start-menu'>
-        {this.state.inTutorSection ? (
-          <Instruction title="🎲 RULES"> 
-            <Button name="👈" onClick={this.handleBackButtonClick}/>
-          </Instruction>
-        ) : (
-          <ul className='menu-options'>
-            {this.props.isLoggedIn ? (
-              <React.Fragment>
-                <li> <Button name="start" /> </li>
-                <li> <Button name="tutorial" onClick={this.handleTutorButtonClick}/> </li>
-                <li> <Button name="logout" onClick={this.props.onLoggedOut}/> </li>
-              </React.Fragment>
-            ) : (
-              this.state.inLoginSection ? (
-                <React.Fragment>
-                  <li> <Button name="👈" onClick={this.handleBackButtonClick}/> </li>
-                  <li> <FirebaseGoogleLogin onLoggedIn={this.props.onLoggedIn}/> </li>
-                  <li> <FirebaseFacebookLogin onLoggedIn={this.props.onLoggedIn}/> </li>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <li> <Button name="start" /> </li>
-                  <li> <Button name="tutorial" onClick={this.handleTutorButtonClick}/> </li>
-                  <li> <Button name="login" onClick={this.handleLoginButtonClick}/> </li>
-                </React.Fragment>
-              )
-            )}
-          </ul>
-        )}
+        {this.resolveMenuSectionView()}
       </div>
     );
   }
@@ -98,8 +141,11 @@ Instruction.propTypes = {
 
 StartMenu.propTypes = {
   isLoggedIn: PropTypes.bool,
-  onLoggedIn: PropTypes.func,
-  onLoggedOut: PropTypes.func
+  hasAlias: PropTypes.bool,
+  aliasFormPh: PropTypes.string,
+  onAliasFormSubmit: PropTypes.func,
+  onLogin: PropTypes.func,
+  onLogout: PropTypes.func,
 }
 
 export default StartMenu;
