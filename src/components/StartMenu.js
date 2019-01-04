@@ -49,25 +49,24 @@ class StartMenu extends Component {
   }
 
   handleUserLoggedIn(userInfo) {
+    console.log(this.props.hasAlias);
     this.props.onLogin(userInfo);
-    const hasAlias = this.props.hasAlias;
-    this.setState({
-      inLoginSection: !this.props.isLoggedIn,
-      inAliasSection: !hasAlias,
-    });
+    console.log(this.props.hasAlias);
+    this.setState((state, props) => ({
+      inLoginSection: !props.isLoggedIn,
+      inAliasSection: !props.hasAlias,
+    }));
+    console.log(this.props.hasAlias);
   }
 
   handleAliasFormSubmit(alias) {
+    console.log(this.props.hasAlias);
     this.props.onAliasFormSubmit(alias);
-    this.checkAliasSubmit();
-  }
-
-  checkAliasSubmit() {
-    const hasAlias = this.props.hasAlias;
-    console.log(hasAlias);
+    console.log(this.props.hasAlias);
     this.setState((state, props) => ({
       inAliasSection: !props.hasAlias,
     }));
+    console.log(this.props.hasAlias);
   }
 
   resolveMenuSectionView() {

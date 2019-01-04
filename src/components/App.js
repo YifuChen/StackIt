@@ -23,16 +23,35 @@ class App extends Component {
   }
 
   UNSAFE_componentWillMount() {
+    // initialize firebase
     firebase.initializeApp(this.props.firebaseConfig);
+    const settings = {
+      timestampsInSnapshots: true,
+    };
+    const firestore = firebase.firestore();
+    firestore.settings(settings);
+
+    // if user already logged in, fetch user info
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         this.setState({
           isLoggedIn: true,
           username: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
           uid: user.uid,
+        });
+        // fetch user alias from firestore
+        console.log(user);
+        const docRef = firestore.collection('users').doc(user.uid);
+        docRef.get().then((doc) => {
+          const alias = doc.get('alias');
+          this.setState({
+            alias: alias,
+            hasAlias: true,
+          });
+        }).catch((err) => {
+          console.log(err);
         });
       }
     });
@@ -47,62 +66,63 @@ class App extends Component {
       email: '',
       uid: '',
       photoURL: '',
+      alias: '',
     });
   }
 
   handleUserLogin(userInfo) {
+    const firestore = firebase.firestore();
+    const uid = userInfo.uid;
+    const docRef = firestore.collection('users').doc(uid);
+
     this.setState({
       isLoggedIn: true,
-      hasAlias: false,
       username: userInfo.username,
       email: userInfo.email,
       uid: userInfo.uid,
+      photoURL: userInfo.photoURL,
+    });
+
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+        // user already has data in firestore
+        const alias = doc.get('alias');
+        this.setState({
+          hasAlias: true,
+          alias: alias,
+        });
+      } else {
+        // create a new doc for user in firestore
+        docRef.set({
+          alias: '',
+          scores: [],
+        });
+        this.setState({
+          hasAlias: false,
+          alias: '',
+        });
+      }
+    }).catch((err) => {
+      console.log(err);
     });
   }
 
   handleAliasFormSubmit(alias) {
-    // check firebase if alias already exists in database
-    const rootRef = firebase.firestore();
-    // let aliasExist = false;
+    const firestore = firebase.firestore();
     const uid = this.state.uid;
-    // rootRef.collection('users').doc(uid).get().then(doc => {
-    //   if (!doc) {
-    //     console.log("no such doc!");
-    //   } else if (doc.data()['alias']) {
-    //     aliasExist = true;
-    //   }
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    // });
-
-    // write new alias to firebase if no alias exists
-    rootRef.collection('user').doc(uid).set({
+    // TODO(1): alias duplication check
+    // write new alias to firestore
+    firestore.collection('users').doc(uid).update({
       alias: alias,
     }).catch((err) => {
       console.log(err);
     });
-
     // update app state
     this.setState({
       hasAlias: true,
       alias: alias,
     });
   }
-
-  // testFirebaseDb() {
-  //   const rootRef = firebase.firestore();
-  //   rootRef.collection('users').doc('test-user1').get().then(doc => {
-  //     if (!doc) {
-  //       console.log("no such doc!");
-  //     } else {
-  //       console.table(doc.data());
-  //     }
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
-  // }
 
   render() {
     return (
