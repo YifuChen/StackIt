@@ -5,6 +5,7 @@ import StartMenu from './StartMenu';
 import '../css/app.css';
 import Avatar from './Avatar';
 import NavBar from './NavBar';
+import { ScoreBoard, LeaderBoard } from './LeaderBoard';
 // import Button from './Button';
 
 class App extends Component {
@@ -19,6 +20,11 @@ class App extends Component {
       uid: '',
       photoURL: '',
       alias: '',
+      leaderboardData: [{ id: '1', name: 'yifu', score: '122' },
+        { id: '2', name: 'kacey', score: '34' },
+        { id: '3', name: 'david', score: '31' },
+        { id: '4', name: 'david', score: '26' },
+        { id: '5', name: 'david', score: '12' }],
     };
   }
 
@@ -47,7 +53,7 @@ class App extends Component {
         docRef.get().then((doc) => {
           const alias = doc.get('alias');
           this.setState({
-            alias: alias,
+            alias,
             hasAlias: true,
           });
         }).catch((err) => {
@@ -72,8 +78,7 @@ class App extends Component {
 
   handleUserLogin(userInfo) {
     const firestore = firebase.firestore();
-    const uid = userInfo.uid;
-    const docRef = firestore.collection('users').doc(uid);
+    const docRef = firestore.collection('users').doc(userInfo.uid);
 
     this.setState({
       isLoggedIn: true,
@@ -89,7 +94,7 @@ class App extends Component {
         const alias = doc.get('alias');
         this.setState({
           hasAlias: true,
-          alias: alias,
+          alias,
         });
       } else {
         // create a new doc for user in firestore
@@ -113,14 +118,14 @@ class App extends Component {
     // TODO(1): alias duplication check
     // write new alias to firestore
     firestore.collection('users').doc(uid).update({
-      alias: alias,
+      alias,
     }).catch((err) => {
       console.log(err);
     });
     // update app state
     this.setState({
       hasAlias: true,
-      alias: alias,
+      alias,
     });
   }
 
@@ -153,6 +158,9 @@ class App extends Component {
                     aliasFormPh={this.state.username}
                     onAliasFormSubmit={alias => this.handleAliasFormSubmit(alias)}/>
 
+        <ScoreBoard score="78" combo="7"/>
+        <LeaderBoard data={this.state.leaderboardData}/>
+
         <footer className="app-footer">
           <p>© Copyright 2018 by Seapunk. All rights reserved.</p>
         </footer>
@@ -166,3 +174,5 @@ App.propTypes = {
 };
 
 export default App;
+
+/*  */

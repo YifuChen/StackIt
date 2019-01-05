@@ -124,7 +124,9 @@ function Instruction(props) {
           <p> Stack up blocks as high as possible!</p>
           <p> </p>
           <p>
-            You will only need to hit <b>SPACE</b> or <b>CLICK</b> or <b>TAP</b> to lay a new block on stack!
+            You will only need to hit <b>SPACE</b>
+             or <b>CLICK</b> or <b>TAP</b> to
+             lay a new block on stack!
           </p>
         </div>
       </li>

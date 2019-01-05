@@ -1,0 +1,84 @@
+/* sscoreboard wrapper */
+.scoreboard {
+  position: relative;
+  box-sizing: border-box;
+  width: 100vw;
+  display: inline-flex;
+  flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+  align-content: center;
+  border: 1px white dashed;
+}
+
+.scoreboard-list {
+  list-style: none;
+  display: inline-flex;
+  flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+  align-content: center;
+  padding: 1rem 0;
+  width: 40vw;
+  border: 1px white solid;
+  border-radius: 20px;
+}
+
+.scoreboard-list > li {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.1rem;
+  color: white;
+}
+
+.scoreboard-list > li:nth-child(even) {
+  font-size: 5rem;
+}
+
+/* leaderboard wrapper */
+.leaderboard {
+  position: relative;
+  box-sizing: border-box;
+  width: 100vw;
+  display: inline-flex;
+  flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+  align-content: center;
+  border: 1px white dashed;
+}
+
+.leaderboard-list {
+  list-style: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+  align-content: center;
+  padding: 1rem 2rem;
+  width: 40vw;
+  border: 1px white solid;
+  border-radius: 20px;
+}
+
+.leaderboard-list > li:first-child {
+  margin-bottom: 1rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.1rem;
+  color: white;
+}
+
+.leaderboard-item {
+  display: inline-flex;
+  flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+  align-content: center;
+  width: 100%;
+}
+
+.leaderboard-item > div {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.1rem;
+  color: white;
+}

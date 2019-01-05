@@ -6,7 +6,9 @@
     "node": true
   },
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "camelcase": ["error", {"allow": ["^UNSAFE_"]}],
+    "prefer-destructuring": ["error", {"object": false}]
   },
   "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb-base"]
 }
