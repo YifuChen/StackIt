@@ -1,7 +1,7 @@
-// import * as THREE from 'three'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
+// import ThreeContainer from './components/ThreeContainer';
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,

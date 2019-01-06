@@ -9,21 +9,6 @@
 	color: white;
 }
 
-.app-bg {
-	position: absolute;
-	z-index: 0;
-	display: flex;
-	justify-content: center;
-	align-content: center;
-}
-
-.app-bg > img {
-	height: 100vh;
-	width: 100vw;
-	object-fit: cover;
-	filter: blur(5px) brightness(50%);
-}
-
 /* info wrapper */
 .app-info {
 	z-index: 2;

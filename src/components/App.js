@@ -5,8 +5,8 @@ import StartMenu from './StartMenu';
 import '../css/app.css';
 import Avatar from './Avatar';
 import NavBar from './NavBar';
-import { ScoreBoard, LeaderBoard } from './LeaderBoard';
-// import Button from './Button';
+// import { ScoreBoard, LeaderBoard } from './LeaderBoard';
+import ThreeContainer from './ThreeContainer';
 
 class App extends Component {
   constructor(props) {
@@ -132,9 +132,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="app-bg">
-          <img src="/src/assets/img/test.jpg"/>
-        </div>
+        <ThreeContainer />
 
         <NavBar />
 
@@ -158,8 +156,8 @@ class App extends Component {
                     aliasFormPh={this.state.username}
                     onAliasFormSubmit={alias => this.handleAliasFormSubmit(alias)}/>
 
-        <ScoreBoard score="78" combo="7"/>
-        <LeaderBoard data={this.state.leaderboardData}/>
+        {/* <ScoreBoard score="78" combo="7"/>
+        <LeaderBoard data={this.state.leaderboardData}/> */}
 
         <footer className="app-footer">
           <p>© Copyright 2018 by Seapunk. All rights reserved.</p>
@@ -175,4 +173,6 @@ App.propTypes = {
 
 export default App;
 
-/*  */
+/* <div className="app-bg">
+          <img src="/src/assets/img/test.jpg"/>
+   </div> */
