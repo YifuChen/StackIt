@@ -24,7 +24,17 @@ class MenuScene {
     this.scene.add(light1);
     this.scene.add(light2);
     this.scene.add(cornerstone);
+    window.addEventListener('resize', this.handleWindowResize.bind(this), false);
+  }
+
+  startClock() {
     this.clock.start();
+  }
+
+  handleWindowResize() {
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
   }
 
   animate() {

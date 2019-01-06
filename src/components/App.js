@@ -7,6 +7,7 @@ import Avatar from './Avatar';
 import NavBar from './NavBar';
 // import { ScoreBoard, LeaderBoard } from './LeaderBoard';
 import ThreeContainer from './ThreeContainer';
+import MenuScene from './three/MenuScene';
 
 class App extends Component {
   constructor(props) {
@@ -132,7 +133,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <ThreeContainer />
+        <ThreeContainer app={new MenuScene()}/>
 
         <NavBar />
 
