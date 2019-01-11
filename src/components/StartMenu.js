@@ -19,6 +19,11 @@ class StartMenu extends Component {
     this.handleUserLoggedIn = this.handleUserLoggedIn.bind(this);
     this.handleAliasFormSubmit = this.handleAliasFormSubmit.bind(this);
     this.handleLogoutButtonClick = this.handleLogoutButtonClick.bind(this);
+    this.handleStartButtonClick = this.handleStartButtonClick.bind(this);
+  }
+
+  handleStartButtonClick() {
+    this.props.onGameStart();
   }
 
   handleLoginButtonClick() {
@@ -95,7 +100,7 @@ class StartMenu extends Component {
     }
     return (
       <ul className='menu-options'>
-        <li> <Button name="start" /> </li>
+        <li> <Button name="start" onClick={this.handleStartButtonClick}/> </li>
         <li> <Button name="tutorial" onClick={this.handleTutorButtonClick}/> </li>
         {this.props.isLoggedIn ? (
           <li> <Button name="logout" onClick={this.handleLogoutButtonClick}/> </li>
@@ -147,6 +152,7 @@ StartMenu.propTypes = {
   onAliasFormSubmit: PropTypes.func,
   onLogin: PropTypes.func,
   onLogout: PropTypes.func,
+  onGameStart: PropTypes.func,
 };
 
 export default StartMenu;

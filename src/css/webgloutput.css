@@ -1,6 +1,0 @@
-#WebGL-output {
-	z-index: 1;
-	position: absolute;
-	-webkit-filter: blur(3px) grayscale(30%);
-	transform: scale(1.1);
-}

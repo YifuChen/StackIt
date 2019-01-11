@@ -1,30 +1,49 @@
 import * as THREE from 'three';
-import { SceneBuilder, RendererBuilder, Cornerstone } from './GeomComponent';
+import { SceneModule, RendererModule, CameraModule } from './entity/SceneBasics';
+import Cornerstone from './entity/Cornerstone';
 import palette from './Palette';
 
 class MenuScene {
   constructor() {
-    this.scene = new SceneBuilder({
-      fog: new THREE.Fog(0x162d47, 50, 380),
-      background: new THREE.Color(0x162d47),
+    this.name = 'MenuScene';
+    // init scene
+    this.scene = new SceneModule({
+      fog: new THREE.Fog(palette.darkBlue, 50, 380),
+      background: new THREE.Color(palette.darkBlue),
     }).build();
-    this.renderer = new RendererBuilder().build();
-    this.camera = new THREE.PerspectiveCamera(
-      45, window.innerWidth / window.innerHeight, 0.1, 1000,
-    );
-    this.camera.position.set(120, 200, 120);
-    this.camera.lookAt(0, 0, 0);
+    // init renderer
+    this.renderer = new RendererModule().build();
+    // init camera
+    this.camera = new CameraModule({
+      type: 'orthograpgic',
+      position: new THREE.Vector3(120, 200, 120),
+      target: new THREE.Vector3(0, 0, 0),
+      frustumSize: 150,
+    }).build();
+    // init clock
     this.clock = new THREE.Clock();
-    const cornerstone = new Cornerstone().build();
-    cornerstone.position.set(0, -75, 0);
+    // init entities
     const light1 = new THREE.DirectionalLight(palette.white, 0.9);
-    light1.position.set(THREE.Vector3(1, 1, 0.5));
-    const light2 = new THREE.HemisphereLight(palette.gray, palette.black, 0.9);
-    this.scene.add(this.camera);
-    this.scene.add(light1);
-    this.scene.add(light2);
-    this.scene.add(cornerstone);
-    window.addEventListener('resize', this.handleWindowResize.bind(this), false);
+    light1.position.set(new THREE.Vector3(1, 1, 0));
+    const light2 = new THREE.HemisphereLight(palette.white, palette.darkBlue, 0.9);
+    const cornerstone = new Cornerstone({
+      position: new THREE.Vector3(0, -100, 0),
+      edge: new THREE.Vector3(50, 200, 50),
+    });
+    this.scene.add(this.camera, light1, light2, cornerstone.mesh);
+    this.handleWindowResize = this.handleWindowResize.bind(this);
+  }
+
+  update() {
+    const deltaTime = this.clock.getDelta();
+    const elapsedTime = this.clock.elapsedTime;
+    if (elapsedTime < 3) {
+      this.camera.translateY(-deltaTime * 30);
+    }
+    this.camera.position.x = 120 * Math.sin(0.1 * elapsedTime);
+    this.camera.position.z = 120 * Math.cos(0.1 * elapsedTime);
+    this.camera.lookAt(0, 0, 0);
+    this.renderer.render(this.scene, this.camera);
   }
 
   startClock() {
@@ -32,24 +51,19 @@ class MenuScene {
   }
 
   handleWindowResize() {
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.camera.aspect = window.innerWidth / window.innerHeight;
+    const aspect = window.innerWidth / window.innerHeight;
+    const frustumSize = 150;
+    this.camera.left = -frustumSize * aspect / 2;
+    this.camera.right = frustumSize * aspect / 2;
+    this.camera.top = frustumSize / 2;
+    this.camera.bottom = -frustumSize / 2;
     this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
-  animate() {
-    const deltaTime = this.clock.getDelta();
-    const elapsedTime = this.clock.elapsedTime;
-    if (this.clock.elapsedTime < 3) {
-      this.camera.translateY(-deltaTime * 30);
-    }
-    this.camera.position.x = 120 * Math.sin(0.1 * elapsedTime);
-    this.camera.position.z = 120 * Math.cos(0.1 * elapsedTime);
-    this.camera.lookAt(0, 0, 0);
-    this.renderer.render(this.scene, this.camera);
-    requestAnimationFrame(this.animate.bind(this));
+  handleMouseClick() {
+    console.log(this.name);
   }
 }
-
 
 export default MenuScene;

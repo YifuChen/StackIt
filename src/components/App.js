@@ -8,12 +8,15 @@ import NavBar from './NavBar';
 // import { ScoreBoard, LeaderBoard } from './LeaderBoard';
 import ThreeContainer from './ThreeContainer';
 import MenuScene from './three/MenuScene';
+import GameScene from './three/GameScene';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoggedIn: false,
+      inGame: false,
+      inGameOver: false,
       hasAlias: false,
       aliasFormPh: '',
       username: '',
@@ -130,39 +133,49 @@ class App extends Component {
     });
   }
 
+  initGame() {
+    this.setState({
+      inGame: true,
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
-        <ThreeContainer app={new MenuScene()}/>
+        <ThreeContainer app={this.state.inGame ? new GameScene() : new MenuScene()}/>
 
-        <NavBar />
+      {!this.state.inGame && (
+        <React.Fragment>
+          <NavBar />
+          <div className="app-info">
+            <ul>
+              <li key="title" id="title">Stack.io</li>
+              <li key="description" id="description">{
+                (this.state.isLoggedIn && this.state.hasAlias) ? (
+                  <Avatar name={this.state.alias} src={this.state.photoURL}/>
+                ) : (
+                  '- A WebGL game built on THREE.js -'
+                )
+              }</li>
+            </ul>
+          </div>
 
-        <div className="app-info">
-          <ul>
-            <li key="title" id="title">Stack.io</li>
-            <li key="description" id="description">{
-              (this.state.isLoggedIn && this.state.hasAlias) ? (
-                <Avatar name={this.state.alias} src={this.state.photoURL}/>
-              ) : (
-                '- A WebGL game built on THREE.js -'
-              )
-            }</li>
-          </ul>
-        </div>
+          <StartMenu onLogin={userInfo => this.handleUserLogin(userInfo)}
+                      onLogout={() => this.handleUserLogout()}
+                      isLoggedIn={this.state.isLoggedIn}
+                      hasAlias={this.state.hasAlias}
+                      aliasFormPh={this.state.username}
+                      onAliasFormSubmit={alias => this.handleAliasFormSubmit(alias)}
+                      onGameStart={() => this.initGame()}/>
 
-        <StartMenu onLogin={userInfo => this.handleUserLogin(userInfo)}
-                    onLogout={() => this.handleUserLogout()}
-                    isLoggedIn={this.state.isLoggedIn}
-                    hasAlias={this.state.hasAlias}
-                    aliasFormPh={this.state.username}
-                    onAliasFormSubmit={alias => this.handleAliasFormSubmit(alias)}/>
+          {/* <ScoreBoard score="78" combo="7"/>
+          <LeaderBoard data={this.state.leaderboardData}/> */}
 
-        {/* <ScoreBoard score="78" combo="7"/>
-        <LeaderBoard data={this.state.leaderboardData}/> */}
-
-        <footer className="app-footer">
-          <p>© Copyright 2018 by Seapunk. All rights reserved.</p>
-        </footer>
+          <footer className="app-footer">
+            <p>© Copyright 2018 by Seapunk. All rights reserved.</p>
+          </footer>
+        </React.Fragment>
+      )}
       </React.Fragment>
     );
   }
