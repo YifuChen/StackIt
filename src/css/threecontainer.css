@@ -1,0 +1,11 @@
+.three-container {
+	position: absolute;
+	z-index: 0;
+	display: flex;
+	justify-content: center;
+  align-content: center;
+  height: 100vh;
+	width: 100vw;
+	object-fit: cover;
+	background: linear-gradient(to bottom, #894da5 0%,#41347a 20%,#162d47 43%);
+}

@@ -1,0 +1,67 @@
+/* nav-bar wrapper */
+.nav-bar {
+  flex-grow: 1;
+  position: relative;
+  width: 100vw;
+  margin-top: 24px;
+  /* border: 1px dashed white; */
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-end;
+  align-items: flex-start;
+}
+
+/* nav-bar toggle */
+.nav-bar-toggle {
+  margin-left: 24px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
+}
+
+.nav-bar-toggle > p {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  transition-property: all;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+	transition-delay: 0s;
+}
+
+.nav-bar-toggle > p:hover {
+  color: orange;
+  transform: scale(1.2);
+}
+
+/* nav-bar options */
+.nav-bar-options {
+  list-style: none;
+  margin-left: 2.1rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.nav-bar-options > li {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.1rem;
+  margin-right: 2.1rem;
+  transition: all 0.2s ease-in-out 0s;
+  cursor: pointer;
+}
+.nav-bar-options > li > a{
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.1rem;
+  transition: all 0.2s ease-in-out 0s;
+  text-decoration: none;
+}
+
+.nav-bar-options > li:hover {
+  transform: scale(1.05);
+  text-decoration: underline;
+}

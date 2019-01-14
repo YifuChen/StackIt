@@ -1,0 +1,16 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "no-console": "off",
+    "camelcase": ["error", {"allow": ["^UNSAFE_"]}],
+    "prefer-destructuring": ["error", {"object": false}],
+    "new-cap": ["error", {"newIsCapExceptionPattern": "^Physijs.\\w"}],
+    "no-underscore-dangle": ["error", {"allow": ["__dirtyPosition", "__dirtyRotation"]}]
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb-base"]
+}

@@ -1,0 +1,30 @@
+button {
+  font-family: 'Roboto', sans-serif;
+	text-align: center;
+	font-size: 2.1rem;
+	height: 5rem;
+	width: 12rem;
+	border: 1px solid white;
+	border-radius: 20px;
+	background-color: rgba(255, 255, 255, 0);
+	cursor: pointer;
+	transition-property: transform, background-color, color, font-weight;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+	transition-delay: 0s;
+}
+
+button:hover {
+	transform: scale(1.05);
+	background-color: white;
+	color: rgba(0, 0, 0, 1);
+	font-weight: bold;
+}
+
+button:active {
+	transform: scale(1);
+}
+
+button:focus {
+	outline: none;
+}

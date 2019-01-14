@@ -1,0 +1,55 @@
+/* start menu wrapper */
+.start-menu {
+	flex-grow: 3;
+	position: relative;
+	width: 100vw;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: flex-start;
+	/* border: 1px white dashed; */
+}
+
+.start-menu-options {
+	width: 100vw;
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	flex-wrap: wrap;
+	list-style: none;
+}
+
+.start-menu-options > li {
+	margin: 1rem;
+}
+
+.instruction {
+	list-style: none;
+	width: 40vw;
+}
+
+.instruction #instruction-info {
+	border: 1px solid white;
+	box-sizing: border-box;
+	padding: 1rem;
+	border-radius: 20px;
+	margin-bottom: 1rem;
+}
+
+.instruction > li > div > p, b, h2 {
+	font-family: 'Rajdhani', sans-serif;
+	text-align: center;
+	font-size: 2.1rem;
+}
+
+.instruction > li > div > p {
+	margin-bottom: 1rem;
+}
+
+.instruction > li > div > h2 {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
