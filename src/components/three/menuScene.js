@@ -1,11 +1,22 @@
 import * as THREE from 'three';
-import { SceneModule, RendererModule, CameraModule } from './entity/SceneBasics';
+import { SceneModule, RendererModule, CameraModule } from './module/SceneModules';
 import Cornerstone from './entity/Cornerstone';
 import palette from './Palette';
 
 class MenuScene {
   constructor() {
-    this.name = 'MenuScene';
+    this.init();
+    // manager state
+    this.state = {
+      id: this.scene.uuid,
+      isTerminated: false,
+    };
+    this.name = this.scene.uuid;
+    // utilities
+    this.handleWindowResize = this.handleWindowResize.bind(this);
+  }
+
+  init() {
     // init scene
     this.scene = new SceneModule({
       fog: new THREE.Fog(palette.darkBlue, 50, 380),
@@ -25,16 +36,18 @@ class MenuScene {
     // init entities
     const light1 = new THREE.DirectionalLight(palette.white, 0.9);
     light1.position.set(new THREE.Vector3(1, 1, 0));
-    const light2 = new THREE.HemisphereLight(palette.white, palette.darkBlue, 0.9);
+    const light2 = new THREE.HemisphereLight(palette.white, palette.darkBlue, 1);
     const cornerstone = new Cornerstone({
       position: new THREE.Vector3(0, -100, 0),
       edge: new THREE.Vector3(50, 200, 50),
     });
     this.scene.add(this.camera, light1, light2, cornerstone.mesh);
-    this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
   update() {
+    if (this.state.isTerminated) {
+      return;
+    }
     const deltaTime = this.clock.getDelta();
     const elapsedTime = this.clock.elapsedTime;
     if (elapsedTime < 3) {
@@ -44,10 +57,6 @@ class MenuScene {
     this.camera.position.z = 120 * Math.cos(0.1 * elapsedTime);
     this.camera.lookAt(0, 0, 0);
     this.renderer.render(this.scene, this.camera);
-  }
-
-  startClock() {
-    this.clock.start();
   }
 
   handleWindowResize() {
@@ -62,7 +71,7 @@ class MenuScene {
   }
 
   handleMouseClick() {
-    console.log(this.name);
+    console.log(this.state.id);
   }
 }
 

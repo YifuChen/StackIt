@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import firebase from 'firebase';
 import StartMenu from './StartMenu';
-import '../css/app.css';
 import Avatar from './Avatar';
 import NavBar from './NavBar';
-// import { ScoreBoard, LeaderBoard } from './LeaderBoard';
+import InfoBoard from './InfoBoard';
+import EndMenu from './EndMenu';
 import ThreeContainer from './ThreeContainer';
 import MenuScene from './three/MenuScene';
 import GameScene from './three/GameScene';
+import '../css/app.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoggedIn: false,
+      inStartMenu: true,
       inGame: false,
-      inGameOver: false,
+      inEndMenu: false,
+      threeSceneManager: new MenuScene(),
       hasAlias: false,
       aliasFormPh: '',
       username: '',
@@ -24,6 +27,8 @@ class App extends Component {
       uid: '',
       photoURL: '',
       alias: '',
+      gameScore: '78',
+      combo: '6',
       leaderboardData: [{ id: '1', name: 'yifu', score: '122' },
         { id: '2', name: 'kacey', score: '34' },
         { id: '3', name: 'david', score: '31' },
@@ -133,50 +138,89 @@ class App extends Component {
     });
   }
 
-  initGame() {
+  handleEndMenuBackButtonClick() {
     this.setState({
-      inGame: true,
+      inStartMenu: true,
+      inEndMenu: false,
+      inGame: false,
+      threeSceneManager: new MenuScene(),
     });
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        <ThreeContainer app={this.state.inGame ? new GameScene() : new MenuScene()}/>
+  initGame() {
+    this.setState({
+      inStartMenu: false,
+      inGame: true,
+      inEndMenu: false,
+      threeSceneManager: new GameScene(),
+    });
+  }
 
-      {!this.state.inGame && (
+  handleGameEnd() {
+    this.setState({
+      inStartMenu: false,
+      inGame: false,
+      inEndMenu: true,
+    });
+  }
+
+  resolveAppSectionView() {
+    if (this.state.inStartMenu || this.state.inEndMenu) {
+      return (
         <React.Fragment>
           <NavBar />
-          <div className="app-info">
-            <ul>
-              <li key="title" id="title">Stack.io</li>
-              <li key="description" id="description">{
-                (this.state.isLoggedIn && this.state.hasAlias) ? (
+          <InfoBoard title='Stack.io'>
+            {
+              (this.state.isLoggedIn && this.state.hasAlias)
+                ? (
                   <Avatar name={this.state.alias} src={this.state.photoURL}/>
                 ) : (
                   '- A WebGL game built on THREE.js -'
                 )
-              }</li>
-            </ul>
-          </div>
-
-          <StartMenu onLogin={userInfo => this.handleUserLogin(userInfo)}
-                      onLogout={() => this.handleUserLogout()}
-                      isLoggedIn={this.state.isLoggedIn}
-                      hasAlias={this.state.hasAlias}
-                      aliasFormPh={this.state.username}
-                      onAliasFormSubmit={alias => this.handleAliasFormSubmit(alias)}
-                      onGameStart={() => this.initGame()}/>
-
-          {/* <ScoreBoard score="78" combo="7"/>
-          <LeaderBoard data={this.state.leaderboardData}/> */}
-
+            }
+          </InfoBoard>
+          {
+            this.state.inStartMenu
+              ? (
+                <StartMenu onLogin={userInfo => this.handleUserLogin(userInfo)}
+                        onLogout={() => this.handleUserLogout()}
+                        isLoggedIn={this.state.isLoggedIn}
+                        hasAlias={this.state.hasAlias}
+                        aliasFormPh={this.state.username}
+                        onAliasFormSubmit={alias => this.handleAliasFormSubmit(alias)}
+                        onGameStart={() => this.initGame()}/>
+              )
+              : (
+                <EndMenu
+                  score={this.state.gameScore}
+                  combo={this.state.combo}
+                  leaderboardData={this.state.leaderboardData}
+                  onBackButtonClick={() => this.handleEndMenuBackButtonClick()} />
+              )
+          }
           <footer className="app-footer">
-            <p>© Copyright 2018 by Seapunk. All rights reserved.</p>
+            - designed and created by Yifu Chen -
           </footer>
         </React.Fragment>
-      )}
-      </React.Fragment>
+      );
+    }
+
+    if (this.state.inGame) {
+      return null;
+    }
+    return null;
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <div className="three-container-style-wrapper"
+              style={this.state.inGame ? null : { filter: 'blur(5px) brightness(90%)' }}>
+          <ThreeContainer manager={this.state.threeSceneManager}
+                          onSceneEnd={() => this.handleGameEnd()}/>
+        </div>
+        {this.resolveAppSectionView()}
+      </div>
     );
   }
 }
@@ -186,7 +230,3 @@ App.propTypes = {
 };
 
 export default App;
-
-/* <div className="app-bg">
-          <img src="/src/assets/img/test.jpg"/>
-   </div> */

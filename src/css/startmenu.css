@@ -1,38 +1,28 @@
-* {
-	margin: 0;
-	padding: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	font-size: 10px;
-	color: white;
-}
-
 /* start menu wrapper */
 .start-menu {
+	flex-grow: 3;
 	position: relative;
 	width: 100vw;
 	display: inline-flex;
-	flex-direction: row;
-	justify-content: center;
+	flex-direction: column;
+	justify-content: flex-start;
 	align-items: center;
-	align-content: center;
-	margin-top: 5vh;
-	border: 1px white dashed;
+	align-content: flex-start;
+	/* border: 1px white dashed; */
 }
 
-.menu-options {
+.start-menu-options {
 	width: 100vw;
 	display: inline-flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 	align-content: center;
+	flex-wrap: wrap;
 	list-style: none;
 }
 
-.menu-options li {
+.start-menu-options > li {
 	margin: 1rem;
 }
 
@@ -43,9 +33,10 @@
 
 .instruction #instruction-info {
 	border: 1px solid white;
+	box-sizing: border-box;
 	padding: 1rem;
 	border-radius: 20px;
-	margin-bottom: 2.1rem;
+	margin-bottom: 1rem;
 }
 
 .instruction > li > div > p, b, h2 {

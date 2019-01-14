@@ -6,38 +6,38 @@
   justify-content: flex-start;
   align-content: center;
   align-items: center;
-  width: 100vw;
+  /* width: max-content; */
 }
 
 .alias-form-input {
   height: 5rem;
-  width: 40vw;
+  width: 100%;
   box-sizing: border-box;
   padding: 1rem;
-  margin-bottom: 2.1rem;
   background-color: rgba(255, 255, 255, 0);
   border: 1px white solid;
   border-radius: 20px;
   font-family: 'Rajdhani', sans-serif;
   font-size: 2.1rem;
+  margin: 1rem 1rem;
 }
 
 .alias-form-input:focus {
   outline: none;
-  border-color: orange;
+  border: 2px orange solid;
 }
 
-.alias-form-buttons {
-  width: 40vw;
+ul.alias-form-buttons {
   list-style: none;
   display: inline-flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-content: center;
   align-items: center;
 }
 
 .alias-form-buttons > li {
-  margin-bottom: 2.1rem;
+  margin: 1rem 1rem;
 }
+

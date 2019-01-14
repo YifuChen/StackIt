@@ -28,10 +28,9 @@ class NavBar extends Component {
         </div>
         {this.state.showOptions && (
           <ul className="nav-bar-options">
-            <li key="facebook">Facebook</li>
-            <li key="instagram">instagram</li>
+            <li key="facebook">facebook</li>
             <li key="twitter">twitter</li>
-            <li key="github">github</li>
+            <li key="github"><a href="https://github.com/YifuChen/StackIt">github</a></li>
             <li key="about">about</li>
           </ul>
         )}

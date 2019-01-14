@@ -1,10 +1,10 @@
 /* nav-bar wrapper */
 .nav-bar {
+  flex-grow: 1;
   position: relative;
-  z-index: 1;
-  height: 5vh;
   width: 100vw;
-  border-bottom: 1px dashed white;
+  margin-top: 24px;
+  /* border: 1px dashed white; */
   display: inline-flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -14,8 +14,7 @@
 
 /* nav-bar toggle */
 .nav-bar-toggle {
-  height: inherit;
-  margin-left: 2.1rem;
+  margin-left: 24px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -24,7 +23,8 @@
 
 .nav-bar-toggle > p {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 3rem;
+  font-size: 2.1rem;
+  font-weight: 700;
   transition-property: all;
 	transition-duration: 0.2s;
 	transition-timing-function: ease-in-out;
@@ -39,13 +39,12 @@
 /* nav-bar options */
 .nav-bar-options {
   list-style: none;
-  height: inherit;
   margin-left: 2.1rem;
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  align-content: center;
+  align-content: flex-start;
 }
 
 .nav-bar-options > li {
@@ -53,6 +52,13 @@
   font-size: 2.1rem;
   margin-right: 2.1rem;
   transition: all 0.2s ease-in-out 0s;
+  cursor: pointer;
+}
+.nav-bar-options > li > a{
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.1rem;
+  transition: all 0.2s ease-in-out 0s;
+  text-decoration: none;
 }
 
 .nav-bar-options > li:hover {

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import Physijs from 'physijs-webpack/webpack';
-import PhysiBrick from './PhysiBrick';
+import FallingBrick from './FallingBrick';
 import palette from '../Palette';
 
 class Brick {
@@ -68,7 +68,7 @@ class Brick {
     let fallingBrickCase;
     if (currInfo.newWidth < 0 || currInfo.newDepth < 0) {
       // no overlapping
-      fallingBrick = new PhysiBrick({
+      fallingBrick = new FallingBrick({
         position: this.mesh.position,
         scale: this.mesh.scale,
         color: palette.purple,
@@ -85,7 +85,7 @@ class Brick {
             prevInfo.y + 8, prevInfo.z)
           : new THREE.Vector3(prevInfo.x + currInfo.deltaX - currInfo.newWidth / 2 - 2,
             prevInfo.y + 8, prevInfo.z);
-        fallingBrick = new PhysiBrick({
+        fallingBrick = new FallingBrick({
           position: fallingBrickPos,
           scale: new THREE.Vector3((prevInfo.width - currInfo.newWidth) / 50,
             1, prevInfo.depth / 50),
@@ -101,7 +101,7 @@ class Brick {
             prevInfo.z + currInfo.deltaZ + currInfo.newDepth / 2 + 2)
           : new THREE.Vector3(prevInfo.x, prevInfo.y + 8,
             prevInfo.z + currInfo.deltaZ - currInfo.newDepth / 2 - 2);
-        fallingBrick = new PhysiBrick({
+        fallingBrick = new FallingBrick({
           position: fallingBrickPos,
           scale: new THREE.Vector3(prevInfo.width / 50, 1,
             (prevInfo.depth - currInfo.newDepth) / 50),

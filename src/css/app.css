@@ -9,49 +9,32 @@
 	color: white;
 }
 
-/* info wrapper */
-.app-info {
-	z-index: 2;
-	position: relative;
+/* app wrapper */
+.app {
 	width: 100vw;
-	height: 30vh;
-	margin-top: 10vh;
+	height: 100vh;
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	align-items: center;
-	align-content: center;
-	border: 1px white dashed;
-}
-
-.app-info > ul {
-	height: min-content;
-	list-style: none;
-	display: inline-flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
+	align-items: stretch;
 	align-content: center;
 }
 
-.app-info li {
-	font-family: 'Rajdhani', sans-serif;
-}
-
-.app-info #title {
-	font-size: 12rem;
-}
-
-.app-info #description {
-	font-size: 2.1rem;
-	letter-spacing: 1px;
+.three-container-style-wrapper {
+	position: absolute;
+	z-index: 0;
+  height: 100vh;
+	width: 100vw;
+	object-fit: cover;
 }
 
 .app-footer {
-	position: absolute;
-	top: 97vh;
-	font-family: 'Roboto', 'sans-serif';
+	position: relative;
+	margin-bottom: 24px;
+	font-family: 'Rajdhani', 'sans-serif';
+	font-size: 1.5rem;
+	letter-spacing: 1px;
 	text-align: center;
 	font-style: italic;
-	border: 1px white dashed;
+	/* border: 1px white dashed; */
 }

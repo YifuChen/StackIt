@@ -8,7 +8,7 @@ class SceneModule {
     const param = Object.assign(SceneModule.defaults, params);
     this.scene = new THREE.Scene();
     this.scene.fog = param.fog;
-    this.scene.background = param.background;
+    // this.scene.background = param.background;
   }
 
   build() {
@@ -25,7 +25,7 @@ class PhysicSceneModule {
   constructor(params = {}) {
     const param = Object.assign(PhysicSceneModule.defaults, params);
     this.scene = new Physijs.Scene();
-    this.scene.background = param.background;
+    // this.scene.background = param.background;
     this.scene.fog = param.fog;
     this.scene.setGravity(param.gravity);
   }
@@ -49,9 +49,10 @@ class RendererModule {
     });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
     this.renderer.setPixelRatio(DPR);
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.setClearColor(0x000000, 0.0);
   }
 
   build() {

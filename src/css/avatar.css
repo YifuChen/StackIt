@@ -7,7 +7,7 @@
   background-color: rgba(255, 255, 255, 0);
   box-sizing: border-box;
   padding: 1rem;
-  width: 40vw;
+  width: max-content;
   /* border: 1px white dashed; */
 }
 
@@ -23,4 +23,5 @@
   color: white;
   font-size: 2.1rem;
   background-color: rgba(255, 255, 255, 0);
+  white-space: nowrap;
 }

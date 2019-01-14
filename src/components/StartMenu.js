@@ -77,7 +77,7 @@ class StartMenu extends Component {
   resolveMenuSectionView() {
     if (this.state.inLoginSection) {
       return (
-        <ul className='menu-options'>
+        <ul className='start-menu-options'>
           <li> <Button name="👈" onClick={this.handleBackButtonClick}/> </li>
           <li> <FirebaseGoogleLogin onLogin={this.handleUserLoggedIn}/> </li>
           <li> <FirebaseFacebookLogin onLogin={this.handleUserLoggedIn}/> </li>
@@ -99,7 +99,7 @@ class StartMenu extends Component {
       );
     }
     return (
-      <ul className='menu-options'>
+      <ul className='start-menu-options'>
         <li> <Button name="start" onClick={this.handleStartButtonClick}/> </li>
         <li> <Button name="tutorial" onClick={this.handleTutorButtonClick}/> </li>
         {this.props.isLoggedIn ? (
@@ -123,7 +123,7 @@ class StartMenu extends Component {
 function Instruction(props) {
   return (
     <ul className="instruction">
-      <li id="instruction-info">
+      <li key="info" id="instruction-info">
         <div>
           <h2> {props.title} </h2>
           <p> Stack up blocks as high as possible!</p>
@@ -135,7 +135,10 @@ function Instruction(props) {
           </p>
         </div>
       </li>
-      <li> {props.children} </li>
+      {
+        React.Children.map(props.children,
+          (item, index) => <li key={index}>{item}</li>)
+      }
     </ul>
   );
 }
