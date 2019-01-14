@@ -9,6 +9,9 @@
 	align-items: center;
 	align-content: center;
 	/* border: 1px white dashed; */
+	animation-name: fadeInUp;
+	animation-duration: 0.4s;
+	animation-timing-function: ease-in-out;
 }
 
 .end-menu-options {
@@ -25,4 +28,3 @@
 .end-menu-options > li {
 	margin: 0rem 1rem;
 }
-

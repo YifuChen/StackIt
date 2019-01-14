@@ -8,6 +8,9 @@
 	align-items: center;
 	align-content: center;
 	/* border: 1px white dashed; */
+	animation-name: fadeInDown;
+	animation-duration: 0.4s;
+	animation-timing-function: ease-in-out;
 }
 
 .info-board > ul {

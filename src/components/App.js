@@ -9,6 +9,7 @@ import EndMenu from './EndMenu';
 import ThreeContainer from './ThreeContainer';
 import MenuScene from './three/MenuScene';
 import GameScene from './three/GameScene';
+import '../css/animation.css';
 import '../css/app.css';
 
 class App extends Component {

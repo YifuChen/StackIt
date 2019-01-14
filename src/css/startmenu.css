@@ -20,6 +20,9 @@
 	align-content: center;
 	flex-wrap: wrap;
 	list-style: none;
+	animation-name: fadeInUp;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-in-out;
 }
 
 .start-menu-options > li {
@@ -29,6 +32,9 @@
 .instruction {
 	list-style: none;
 	width: 40vw;
+	animation-name: fadeInUp;
+	animation-duration: 0.4s;
+	animation-timing-function: ease-in-out;
 }
 
 .instruction #instruction-info {

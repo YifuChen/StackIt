@@ -8,6 +8,9 @@
   box-sizing: border-box;
   padding: 1rem;
   width: max-content;
+  animation-name: fadeInDown;
+	animation-duration: 0.4s;
+	animation-timing-function: ease-in-out;
   /* border: 1px white dashed; */
 }
 

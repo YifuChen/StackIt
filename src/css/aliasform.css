@@ -7,6 +7,9 @@
   align-content: center;
   align-items: center;
   /* width: max-content; */
+  animation-name: fadeInUp;
+	animation-duration: 0.4s;
+	animation-timing-function: ease-in-out;
 }
 
 .alias-form-input {
