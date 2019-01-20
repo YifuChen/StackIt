@@ -7,7 +7,7 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showOptions: false,
+      showOptions: true,
       toggleIcon: '>',
     };
     this.handleToggleClick = this.handleToggleClick.bind(this);

@@ -3,59 +3,14 @@
 	flex-grow: 3;
 	position: relative;
 	width: 100vw;
-	display: inline-flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-	align-content: flex-start;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 	/* border: 1px white dashed; */
 }
 
-.start-menu-options {
-	width: 100vw;
-	display: inline-flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-	flex-wrap: wrap;
-	list-style: none;
+.tutorial-section, .main-section, .login-section {
 	animation-name: fadeInUp;
   animation-duration: 0.4s;
   animation-timing-function: ease-in-out;
-}
-
-.start-menu-options > li {
-	margin: 1rem;
-}
-
-.instruction {
-	list-style: none;
-	width: 40vw;
-	animation-name: fadeInUp;
-	animation-duration: 0.4s;
-	animation-timing-function: ease-in-out;
-}
-
-.instruction #instruction-info {
-	border: 1px solid white;
-	box-sizing: border-box;
-	padding: 1rem;
-	border-radius: 20px;
-	margin-bottom: 1rem;
-}
-
-.instruction > li > div > p, b, h2 {
-	font-family: 'Rajdhani', sans-serif;
-	text-align: center;
-	font-size: 2.1rem;
-}
-
-.instruction > li > div > p {
-	margin-bottom: 1rem;
-}
-
-.instruction > li > div > h2 {
-	font-size: 3rem;
-	margin-bottom: 1rem;
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '../css/aliasform.css';
 import Button from './Button';
+import ShowcaseLayout from './layout/ShowcaseLayout';
 
 class AliasForm extends Component {
   constructor(props) {
@@ -29,14 +30,15 @@ class AliasForm extends Component {
 
   render() {
     return (
-      <div className="alias-form">
-        <input className="alias-form-input"
-                placeholder={this.props.placeholder}
-                onChange={event => this.handleInputChange(event)}/>
-        <ul className="alias-form-buttons">
-          <li key="submit"> <Button name="submit" onClick={this.handleSubmit}/> </li>
-          <li key="logout"> <Button name="logout" onClick={this.handleLogout}/> </li>
-        </ul>
+      <div key="alias-form" className="alias-form">
+        <ShowcaseLayout showcase={
+          <input className="alias-form-input"
+                  placeholder={this.props.placeholder}
+                  onChange={event => this.handleInputChange(event)}/>
+        }>
+          <Button name="submit" onClick={this.handleSubmit}/>
+          <Button name="logout" onClick={this.handleLogout}/>
+        </ShowcaseLayout>
       </div>
     );
   }

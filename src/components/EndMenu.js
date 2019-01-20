@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 import { ScoreBoard, LeaderBoard } from './LeaderBoard';
 import '../css/endmenu.css';
+import ShowcaseLayout from './layout/ShowcaseLayout';
 
 
 class EndMenu extends Component {
@@ -38,21 +39,16 @@ class EndMenu extends Component {
   render() {
     return (
       <div className='end-menu'>
-        {
+        <ShowcaseLayout showcase={
           (this.state.inScoreSection)
             ? (<ScoreBoard score={this.props.score} combo={this.props.combo} />)
             : (<LeaderBoard data={this.props.leaderboardData} />)
-        }
-        <ul className='end-menu-options'>
-          <li key="back"> <Button name="👈" onClick={this.handleBackButtonClick}/> </li>
-          <li key="board">
-            {
-              (this.state.inScoreSection)
-                ? (<Button name="leaderboard" onClick={this.handleLeaderBoardButtonClick}/>)
-                : (<Button name="scoreboard" onClick={this.handleScoreBoardButtonClick}/>)
-            }
-          </li>
-        </ul>
+        }>
+          <Button name="👈" onClick={this.handleBackButtonClick}/>
+          {(this.state.inScoreSection)
+            ? (<Button name="leaderboard" onClick={this.handleLeaderBoardButtonClick}/>)
+            : (<Button name="scoreboard" onClick={this.handleScoreBoardButtonClick}/>)}
+        </ShowcaseLayout>
       </div>
     );
   }

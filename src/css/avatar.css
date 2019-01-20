@@ -21,8 +21,7 @@
   margin-bottom: 1rem;
 }
 
-.avatar p {
-  font-family: 'Rajdhani', sans-serif;
+.avatar-info {
   color: white;
   font-size: 2.1rem;
   background-color: rgba(255, 255, 255, 0);

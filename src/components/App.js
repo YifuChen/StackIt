@@ -38,7 +38,7 @@ class App extends Component {
     };
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     // initialize firebase
     firebase.initializeApp(this.props.firebaseConfig);
     const settings = {

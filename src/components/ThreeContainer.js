@@ -6,46 +6,62 @@ class ThreeContainer extends Component {
   constructor(props) {
     super(props);
     this.manager = this.props.manager;
-    this.animate = this.animate.bind(this);
     this.isSceneEndHandled = false;
+    this.animate = this.animate.bind(this);
     this.handleMouseClick = this.handleMouseClick.bind(this);
   }
 
   componentDidMount() {
-    const mountPoint = this.mountPoint;
-    mountPoint.appendChild(this.manager.renderer.domElement);
-    window.addEventListener('resize', this.manager.handleWindowResize, false);
-    this.animate();
+    if (this.manager !== null) {
+      const mountPoint = this.mountPoint;
+      mountPoint.appendChild(this.manager.renderer.domElement);
+      window.addEventListener('resize', this.manager.handleWindowResize, false);
+      this.animate();
+    }
   }
 
   shouldComponentUpdate(nextProps) {
+    if (this.manager === null) {
+      if (nextProps.manager !== null) {
+        return true;
+      }
+      return false;
+    }
+
+    const mountPoint = this.mountPoint;
+    const nextManager = nextProps.manager;
     const currManager = this.manager;
     const currRenderer = currManager.renderer;
-    const nextManager = nextProps.manager;
-    const mountPoint = this.mountPoint;
-    if (currManager.name !== nextManager.name) {
+    if (nextProps.manager === null || currManager.name !== nextManager.name) {
       cancelAnimationFrame(this.frameId);
       mountPoint.removeChild(currRenderer.domElement);
       window.removeEventListener('resize', currManager.handleWindowResize);
       return true;
     }
+
     return false;
   }
 
   componentDidUpdate() {
     const mountPoint = this.mountPoint;
     const manager = this.props.manager;
-    const renderer = manager.renderer;
-    this.isSceneEndHandled = false;
-    this.manager = manager;
-    mountPoint.appendChild(renderer.domElement);
-    window.addEventListener('resize', this.manager.handleWindowResize, false);
-    this.animate();
+    if (manager !== null) {
+      const renderer = manager.renderer;
+      this.isSceneEndHandled = false;
+      this.manager = manager;
+      mountPoint.appendChild(renderer.domElement);
+      window.addEventListener('resize', this.manager.handleWindowResize, false);
+      this.animate();
+    }
   }
 
   componentWillUnmount() {
-    cancelAnimationFrame(this.frameId);
-    this.mountPoint.removeChild(this.manager.renderer.domElement);
+    if (this.frameId !== null) {
+      cancelAnimationFrame(this.frameId);
+    }
+    if (this.manager !== null) {
+      this.mountPoint.removeChild(this.manager.renderer.domElement);
+    }
   }
 
   animate() {
@@ -78,10 +94,14 @@ class ThreeContainer extends Component {
 }
 
 ThreeContainer.propTypes = {
-  manager: PropTypes.object.isRequired,
-  handleWindowResize: PropTypes.func,
+  manager: PropTypes.object,
   onSceneEnd: PropTypes.func,
-  style: PropTypes.object,
+  handleWindowResize: PropTypes.func,
+};
+
+ThreeContainer.defaultProps = {
+  manager: null,
+  onSceneEnd: null,
 };
 
 export default ThreeContainer;

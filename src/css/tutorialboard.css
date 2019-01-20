@@ -1,0 +1,19 @@
+.tutorialboard {
+	width: 40vw;
+	min-width: 25rem;
+	border: 1px solid white;
+	box-sizing: border-box;
+	padding: 1rem;
+	border-radius: 20px;
+}
+
+.tutorialboard-content * {
+	text-align: center;
+	font-size: 2.1rem;
+}
+
+.tutorialboard-title {
+	text-align: center;
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}

@@ -22,7 +22,6 @@
 }
 
 .nav-bar-toggle > p {
-  font-family: 'Rajdhani', sans-serif;
   font-size: 2.1rem;
   font-weight: 700;
   transition-property: all;
@@ -51,14 +50,12 @@
 }
 
 .nav-bar-options > li {
-  font-family: 'Rajdhani', sans-serif;
   font-size: 2.1rem;
   margin-right: 2.1rem;
   transition: all 0.2s ease-in-out 0s;
   cursor: pointer;
 }
 .nav-bar-options > li > a{
-  font-family: 'Rajdhani', sans-serif;
   font-size: 2.1rem;
   transition: all 0.2s ease-in-out 0s;
   text-decoration: none;

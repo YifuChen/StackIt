@@ -2,7 +2,6 @@
 .scoreboard {
   position: relative;
   box-sizing: border-box;
-  margin-bottom: 1rem;
   display: inline-flex;
   flex-direction: column;
 	justify-content: flex-start;
@@ -12,6 +11,8 @@
 }
 
 .scoreboard-list {
+  width: 40vw;
+  min-width: 25rem;
   list-style: none;
   display: inline-flex;
   flex-direction: column;
@@ -19,13 +20,11 @@
 	align-items: center;
   align-content: center;
   padding: 1rem 0;
-  min-width: 40vw;
   border: 1px white solid;
   border-radius: 20px;
 }
 
 .scoreboard-list > li {
-  font-family: 'Rajdhani', sans-serif;
   font-size: 2.1rem;
   color: white;
 }
@@ -38,7 +37,6 @@
 .leaderboard {
   position: relative;
   box-sizing: border-box;
-  margin-bottom: 1rem;
   display: inline-flex;
   flex-direction: column;
 	justify-content: flex-start;
@@ -48,6 +46,8 @@
 }
 
 .leaderboard-list {
+  width: 40vw;
+  min-width: 25rem;
   list-style: none;
   box-sizing: border-box;
   display: inline-flex;
@@ -56,14 +56,12 @@
 	align-items: center;
   align-content: center;
   padding: 1rem 2rem;
-  min-width: 40vw;
   border: 1px white solid;
   border-radius: 20px;
 }
 
 .leaderboard-list > li:first-child {
   margin-bottom: 1rem;
-  font-family: 'Rajdhani', sans-serif;
   font-size: 2.1rem;
   color: white;
 }
@@ -78,7 +76,6 @@
 }
 
 .leaderboard-item > div {
-  font-family: 'Rajdhani', sans-serif;
   font-size: 2.1rem;
   color: white;
 }

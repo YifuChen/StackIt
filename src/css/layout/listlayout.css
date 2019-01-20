@@ -1,0 +1,21 @@
+.list-layout {
+  width: max-content;
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  list-style: none;
+}
+
+.list-layout > li {
+	margin: 1rem;
+}
+
+@media all and (max-width: 600px) {
+  .list-layout {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}

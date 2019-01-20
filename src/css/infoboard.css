@@ -23,10 +23,6 @@
 	align-content: center;
 }
 
-.info-board li {
-	font-family: 'Rajdhani', sans-serif;
-}
-
 .info-board #title {
 	font-size: 12rem;
 }

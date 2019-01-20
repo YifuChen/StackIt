@@ -1,0 +1,39 @@
+/* showcase layout wrapper */
+.showcase-layout {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+}
+
+.showcase-layout-top {
+  /* width: calc(100% - 2rem); */
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+ul.showcase-layout-bottom {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+
+ul.showcase-layout-bottom li {
+  margin-top: 1rem;
+}
+
+@media all and (max-width: 500px) {
+  ul.showcase-layout-bottom {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
+  }
+}

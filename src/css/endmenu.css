@@ -3,28 +3,10 @@
 	flex-grow: 3;
 	position: relative;
 	width: 100vw;
-	display: inline-flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-	align-content: center;
-	/* border: 1px white dashed; */
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 	animation-name: fadeInUp;
 	animation-duration: 0.4s;
 	animation-timing-function: ease-in-out;
-}
-
-.end-menu-options {
-	width: 100vw;
-	display: inline-flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-	list-style: none;
-	margin-top: 1rem;
-}
-
-.end-menu-options > li {
-	margin: 0rem 1rem;
 }
