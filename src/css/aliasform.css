@@ -1,5 +1,11 @@
 /* alias-form wrapper */
 .alias-form {
+  flex-grow: 3;
+	position: relative;
+	width: 100vw;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
   animation-name: fadeInUp;
 	animation-duration: 0.4s;
 	animation-timing-function: ease-in-out;
