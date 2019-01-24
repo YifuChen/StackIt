@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
 import '../css/leaderboard.css';
 
 function LeaderBoard(props) {
@@ -16,6 +17,7 @@ function LeaderBoard(props) {
   );
 }
 
+
 function LeaderBoardItem(props) {
   return (
     <li key={props.id} className="leaderboard-item">
@@ -25,18 +27,6 @@ function LeaderBoardItem(props) {
   );
 }
 
-function ScoreBoard(props) {
-  return (
-    <div className="scoreboard">
-      <ul className="scoreboard-list">
-        <li key="score-title"> score </li>
-        <li key="score" id="score"> {props.score} </li>
-        <li key="combo-title"> max combo </li>
-        <li key="combo" id="combo">  {props.combo} </li>
-      </ul>
-    </div>
-  );
-}
 
 LeaderBoard.propTypes = {
   data: PropTypes.array,
@@ -48,9 +38,4 @@ LeaderBoardItem.propTypes = {
   score: PropTypes.string,
 };
 
-ScoreBoard.propTypes = {
-  score: PropTypes.string,
-  combo: PropTypes.string,
-};
-
-export { LeaderBoard, ScoreBoard };
+export default LeaderBoard;

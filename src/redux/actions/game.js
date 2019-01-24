@@ -5,13 +5,13 @@ import {
   RESET_GAME,
 } from '../constants/actionTypes';
 
-function gameIncreaseScore() {
+function gameIncrementScore() {
   return {
     type: INC_SCORE,
   };
 }
 
-function gameIncreaseCombo() {
+function gameIncrementCombo() {
   return {
     type: INC_COMBO,
   };
@@ -31,8 +31,8 @@ function gameReset() {
 
 
 export {
-  gameIncreaseCombo,
-  gameIncreaseScore,
+  gameIncrementCombo,
+  gameIncrementScore,
   gameReset,
   gameSetMaxCombo,
 };

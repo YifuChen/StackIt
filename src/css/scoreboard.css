@@ -1,0 +1,13 @@
+.scoreboard {
+  position: relative;
+  top: 10vh;
+  z-index: 1;
+  display: inline-block;
+  margin: 0 auto;
+  width: fit-content;
+  height: fit-content;
+}
+
+.scoreboard > p {
+  font-size: 6rem;
+}

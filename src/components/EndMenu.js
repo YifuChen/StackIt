@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
-import { ScoreBoard, LeaderBoard } from './LeaderBoard';
+import LeaderBoard from './LeaderBoard';
+import ResultBoard from './ResultBoard';
 import '../css/endmenu.css';
 import ShowcaseLayout from './layout/ShowcaseLayout';
 
@@ -10,7 +11,7 @@ class EndMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSection: 'score',
+      currentSection: 'result',
       leaderboardData: [{ id: '1', name: 'yifu', score: '122' },
         { id: '2', name: 'kacey', score: '34' },
         { id: '3', name: 'david', score: '31' },
@@ -32,14 +33,14 @@ class EndMenu extends Component {
     return (
       <div className='end-menu'>
         <ShowcaseLayout showcase={
-          (section === 'score')
-            ? (<ScoreBoard score={this.state.score} combo={this.state.combo} />)
+          (section === 'result')
+            ? (<ResultBoard score={this.state.score} combo={this.state.combo} />)
             : (<LeaderBoard data={this.state.leaderboardData} />)
         }>
-          <Button name="👈" onClick={this.props.onBackButtonClick}/>
-          {(section === 'score')
+          <Button name="👈" onClick={this.props.onFinish}/>
+          {(section === 'result')
             ? (<Button name="leaderboard" onClick={() => this.navigateToSection('leader')}/>)
-            : (<Button name="scoreboard" onClick={() => this.navigateToSection('score')}/>)}
+            : (<Button name="scores" onClick={() => this.navigateToSection('score')}/>)}
         </ShowcaseLayout>
       </div>
     );
@@ -50,7 +51,7 @@ EndMenu.propTypes = {
   score: PropTypes.string,
   combo: PropTypes.string,
   leaderboardData: PropTypes.array,
-  onBackButtonClick: PropTypes.func,
+  onFinish: PropTypes.func,
 };
 
 export default EndMenu;

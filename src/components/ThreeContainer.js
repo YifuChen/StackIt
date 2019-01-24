@@ -73,7 +73,7 @@ class ThreeContainer extends Component {
       this.manager.update();
       if (this.manager.state.isTerminated) {
         console.log(this.manager.state);
-        this.props.onSceneEnd();
+        this.props.onFinish();
         this.isSceneEndHandled = true;
       }
     }
@@ -95,13 +95,13 @@ class ThreeContainer extends Component {
 
 ThreeContainer.propTypes = {
   manager: PropTypes.object,
-  onSceneEnd: PropTypes.func,
+  onFinish: PropTypes.func,
   handleWindowResize: PropTypes.func,
 };
 
 ThreeContainer.defaultProps = {
   manager: null,
-  onSceneEnd: null,
+  onFinish: null,
 };
 
 export default ThreeContainer;

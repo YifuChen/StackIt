@@ -1,5 +1,8 @@
 import * as THREE from 'three';
-// import Physijs from 'physijs-webpack/webpack';
+import store from '../../redux/store';
+import {
+  gameIncrementCombo, gameIncrementScore, gameSetMaxCombo,
+} from '../../redux/actions/game';
 import Brick from './entity/Brick';
 import Cornerstone from './entity/Cornerstone';
 import { PhysicSceneModule, RendererModule, CameraModule } from './module/SceneModules';
@@ -13,9 +16,6 @@ class GameScene {
       id: this.scene.uuid,
       isTerminated: false,
       toDrop: false,
-      combo: 0,
-      maxCombo: 0,
-      score: 0,
     };
     this.name = this.scene.uuid;
     // utilities
@@ -95,13 +95,14 @@ class GameScene {
           if (res.case === 'partial') {
             this.fallingBricks.push(res.fallingBrick);
             this.scene.add(res.fallingBrick.mesh);
-            this.state.maxCombo = Math.max(this.state.combo, this.state.maxCombo);
-            this.state.combo = 0;
+            if (store.getState().gameState.combo !== 0) {
+              store.dispatch(gameSetMaxCombo());
+            }
           }
           if (res.case === 'overlap') {
-            this.state.combo += 1;
+            store.dispatch(gameIncrementCombo());
           }
-          this.state.score += 1;
+          store.dispatch(gameIncrementScore());
           // create new brick
           const currPos = this.bricks[height - 1].mesh.position;
           const newBrick = new Brick({
@@ -122,6 +123,7 @@ class GameScene {
       if (brick && brick.mesh.position.y < this.camera.position.y - 150) {
         this.scene.remove(brick.mesh);
         brick.mesh.geometry.dispose();
+        brick.mesh.material.dispose();
         this.fallingBricks.splice(index, 1);
       } else {
         brick.update(deltaTime);

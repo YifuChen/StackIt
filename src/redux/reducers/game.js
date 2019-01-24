@@ -22,7 +22,7 @@ export default function gameStateReducer(state = gameStateDefault, action) {
         combo: 0,
       });
     case RESET_GAME:
-      return {};
+      return gameStateDefault;
     default:
       return state;
   }

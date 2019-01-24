@@ -31,7 +31,7 @@ class StartMenu extends Component {
         return (
           <div key='main-section' className='main-section'>
             <ListLayout>
-              <Button name="start" onClick={this.props.onGameStart}/>
+              <Button name="start" onClick={this.props.onFinish}/>
               <Button name="tutorial" onClick={() => this.navigateToSection('tutorial')}/>
               {this.props.userRegistered ? (
                 <FirebaseLogout />
@@ -74,7 +74,7 @@ class StartMenu extends Component {
 
 StartMenu.propTypes = {
   userRegistered: PropTypes.bool,
-  onGameStart: PropTypes.func,
+  onFinish: PropTypes.func,
 };
 
 
