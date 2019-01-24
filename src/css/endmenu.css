@@ -1,6 +1,6 @@
 /* end menu wrapper */
 .end-menu {
-	flex-grow: 3;
+	flex-grow: 1;
 	position: relative;
 	width: 100vw;
 	display: flex;

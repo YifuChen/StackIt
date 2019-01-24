@@ -97,7 +97,7 @@ class App extends Component {
         }
         {section !== 'game' && (
           <footer className="app-footer">
-            - designed and created by Yifu Chen -
+            - created with ☕️ by Yifu Chen -
           </footer>)
         }
       </div>

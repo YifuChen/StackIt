@@ -1,13 +1,24 @@
-.scoreboard {
+.scoreboard ul {
   position: relative;
   top: 10vh;
-  z-index: 1;
-  display: inline-block;
-  margin: 0 auto;
-  width: fit-content;
-  height: fit-content;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation-name: popIn;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
 }
 
-.scoreboard > p {
+li.scoreboard-score {
   font-size: 6rem;
+}
+
+li.scoreboard-combo {
+  color: rgb(246,0,124);
+  font-weight: 900;
+  font-size: 2.1rem;
+  animation-name: popIn;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
 }

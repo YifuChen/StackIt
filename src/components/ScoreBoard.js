@@ -7,20 +7,26 @@ import '../css/scoreboard.css';
 function ScoreBoard(props) {
   return (
     <div className="scoreboard">
-      <p>{props.score}</p>
+      <ul>
+        <li className="scoreboard-score" key="score">{props.score}</li>
+        {
+          props.combo !== 0 && (<li className="scoreboard-combo" key="combo">- COMBO -</li>)
+        }
+      </ul>
     </div>
   );
 }
 
 ScoreBoard.propTypes = {
   score: PropTypes.number.isRequired,
+  combo: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(store) {
   const { gameState } = store;
   return {
     score: gameState.score,
-    maxCombo: gameState.maxCombo,
+    combo: gameState.combo,
   };
 }
 

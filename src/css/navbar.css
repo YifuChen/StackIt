@@ -1,6 +1,6 @@
 /* nav-bar wrapper */
 .nav-bar {
-  flex-grow: 1;
+  flex-grow: 0;
   position: relative;
   width: 100vw;
   margin-top: 24px;
@@ -31,7 +31,7 @@
 }
 
 .nav-bar-toggle > p:hover {
-  color: orange;
+  color: rgb(246,0,124);
   transform: scale(1.2);
 }
 

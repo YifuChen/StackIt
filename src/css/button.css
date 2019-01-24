@@ -18,8 +18,9 @@ button {
 
 button:hover {
 	transform: scale(1.05);
-	background-color: white;
-	color: rgba(0, 0, 0, 1);
+	background-color: rgb(246,0,124);
+	border-color: rgb(246,0,124);
+	/* color: rgba(0, 0, 0, 1); */
 	font-weight: bold;
 }
 

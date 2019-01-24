@@ -1,11 +1,12 @@
 /* start menu wrapper */
 .start-menu {
-	flex-grow: 3;
+	flex-grow: 1;
 	position: relative;
 	width: 100vw;
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 	/* border: 1px white dashed; */
 }
 
