@@ -13,23 +13,28 @@ const leadersDataDefault = {
   data: {},
 };
 
-const gameDefault = {
+const gameStateDefault = {
   score: 0,
   combo: 0,
   maxCombo: 0,
 };
 
-const appDefault = {
+const appStateDefault = {
   userRegistered: false,
   aliasRegistered: false,
+  currentSection: {
+    app: 'start',
+    startMenu: 'main',
+    endMenu: 'scoreboard',
+  },
 };
 
 const errorDefault = [];
 
 // default state of the app
 const rootDefault = {
-  app: appDefault,
-  game: gameDefault,
+  appState: appStateDefault,
+  gameState: gameStateDefault,
   userInfo: userInfoDefault,
   userData: userDataDefault,
   leadersData: leadersDataDefault,
@@ -37,8 +42,8 @@ const rootDefault = {
 };
 
 export {
-  appDefault,
-  gameDefault,
+  appStateDefault,
+  gameStateDefault,
   userInfoDefault,
   userDataDefault,
   leadersDataDefault,

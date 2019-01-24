@@ -7,8 +7,8 @@ import errorReducer from './reducers/error';
 
 // combine all reducers
 const rootReducer = combineReducers({
-  app: appReducer,
-  game: gameStateReducer,
+  appState: appReducer,
+  gameState: gameStateReducer,
   userInfo: userInfoReducer,
   userData: userDataReducer,
   leadersData: leadersDataReducer,

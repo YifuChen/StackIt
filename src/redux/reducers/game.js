@@ -4,9 +4,9 @@ import {
   SET_MAX_COMBO,
   RESET_GAME,
 } from '../constants/actionTypes';
-import { gameDefault } from '../constants/defaultStates';
+import { gameStateDefault } from '../constants/defaultStates';
 
-export default function gameStateReducer(state = gameDefault, action) {
+export default function gameStateReducer(state = gameStateDefault, action) {
   switch (action.type) {
     case INC_SCORE:
       return Object.assign({}, state, {

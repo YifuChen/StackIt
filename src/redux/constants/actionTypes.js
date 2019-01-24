@@ -10,8 +10,9 @@ export const ADD_LEADERS = 'ADD_LEADERS';
 export const REMOVE_LEADERS = 'REMOVE_LEADRS';
 // appState
 export const REGISTER_USER = 'REGISTER_USER';
-export const INVALIDATE_USER = 'INVALID_USER';
+export const INVALIDATE_USER = 'INVALIDATE_USER';
 export const REGISTER_ALIAS = 'REGISTER_ALIAS';
+export const SWITCH_SECTION = 'SWITCH_SECTION';
 // gameState
 export const INC_SCORE = 'INCREMENT_SCORE';
 export const INC_COMBO = 'INCREMENT_COMBO';

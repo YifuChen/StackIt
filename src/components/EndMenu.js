@@ -10,44 +10,36 @@ class EndMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inScoreSection: true,
-      inLeaderSection: false,
+      currentSection: 'score',
+      leaderboardData: [{ id: '1', name: 'yifu', score: '122' },
+        { id: '2', name: 'kacey', score: '34' },
+        { id: '3', name: 'david', score: '31' },
+        { id: '4', name: 'david', score: '26' },
+        { id: '5', name: 'david', score: '12' }],
+      score: 76,
+      combo: 7,
     };
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-    this.handleLeaderBoardButtonClick = this.handleLeaderBoardButtonClick.bind(this);
-    this.handleScoreBoardButtonClick = this.handleScoreBoardButtonClick.bind(this);
   }
 
-  handleBackButtonClick() {
-    this.props.onBackButtonClick();
-  }
-
-  handleLeaderBoardButtonClick() {
+  navigateToSection(section) {
     this.setState({
-      inScoreSection: false,
-      inLeaderSection: true,
-    });
-  }
-
-  handleScoreBoardButtonClick() {
-    this.setState({
-      inScoreSection: true,
-      inLeaderSection: false,
+      currentSection: section,
     });
   }
 
   render() {
+    const section = this.state.currentSection;
     return (
       <div className='end-menu'>
         <ShowcaseLayout showcase={
-          (this.state.inScoreSection)
-            ? (<ScoreBoard score={this.props.score} combo={this.props.combo} />)
-            : (<LeaderBoard data={this.props.leaderboardData} />)
+          (section === 'score')
+            ? (<ScoreBoard score={this.state.score} combo={this.state.combo} />)
+            : (<LeaderBoard data={this.state.leaderboardData} />)
         }>
-          <Button name="👈" onClick={this.handleBackButtonClick}/>
-          {(this.state.inScoreSection)
-            ? (<Button name="leaderboard" onClick={this.handleLeaderBoardButtonClick}/>)
-            : (<Button name="scoreboard" onClick={this.handleScoreBoardButtonClick}/>)}
+          <Button name="👈" onClick={this.props.onBackButtonClick}/>
+          {(section === 'score')
+            ? (<Button name="leaderboard" onClick={() => this.navigateToSection('leader')}/>)
+            : (<Button name="scoreboard" onClick={() => this.navigateToSection('score')}/>)}
         </ShowcaseLayout>
       </div>
     );

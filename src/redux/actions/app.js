@@ -1,4 +1,6 @@
-import { REGISTER_USER, REGISTER_ALIAS, INVALIDATE_USER } from '../constants/actionTypes';
+import {
+  REGISTER_USER, REGISTER_ALIAS, INVALIDATE_USER, SWITCH_SECTION,
+} from '../constants/actionTypes';
 
 function appRegisterUser() {
   return {
@@ -18,8 +20,16 @@ function appInvalidateUser() {
   };
 }
 
+function appSwitchSection(sectionName) {
+  return {
+    type: SWITCH_SECTION,
+    payload: sectionName,
+  };
+}
+
 export {
   appRegisterUser,
   appRegisterAlias,
   appInvalidateUser,
+  appSwitchSection,
 };

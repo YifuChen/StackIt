@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../css/aliasform.css';
+import { userSumbitAliasBatch } from '../redux/actions/user';
 import Button from './Button';
 import ShowcaseLayout from './layout/ShowcaseLayout';
+import FirebaseLogout from './container/FirebaseLogout';
 
 class AliasForm extends Component {
   constructor(props) {
@@ -10,22 +13,12 @@ class AliasForm extends Component {
     this.state = {
       value: this.props.placeholder,
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleInputChange(event) {
     this.setState({
       value: event.target.value,
     });
-  }
-
-  handleSubmit() {
-    this.props.onSubmit(this.state.value);
-  }
-
-  handleLogout() {
-    this.props.onLogout();
   }
 
   render() {
@@ -36,8 +29,8 @@ class AliasForm extends Component {
                   placeholder={this.props.placeholder}
                   onChange={event => this.handleInputChange(event)}/>
         }>
-          <Button name="submit" onClick={this.handleSubmit}/>
-          <Button name="logout" onClick={this.handleLogout}/>
+          <Button name="submit" onClick={() => this.props.userSumbitAliasBatch(this.state.value)}/>
+          <FirebaseLogout />
         </ShowcaseLayout>
       </div>
     );
@@ -46,8 +39,16 @@ class AliasForm extends Component {
 
 AliasForm.propTypes = {
   placeholder: PropTypes.string,
-  onSubmit: PropTypes.func,
-  onLogout: PropTypes.func,
+  userSumbitAliasBatch: PropTypes.func,
 };
 
-export default AliasForm;
+function mapStateToProps(state) {
+  const { userInfo } = state;
+  return { placeholder: userInfo.data.displayName };
+}
+
+const mapDispatchToProps = {
+  userSumbitAliasBatch,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AliasForm);
